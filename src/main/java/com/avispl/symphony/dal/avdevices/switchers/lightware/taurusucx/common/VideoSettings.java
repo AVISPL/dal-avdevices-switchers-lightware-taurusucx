@@ -1,0 +1,79 @@
+/*
+ *  Copyright (c) 2023 AVI-SPL, Inc. All Rights Reserved.
+ */
+package com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common;
+
+/**
+ * VideoSettings class provides the Locking/Unlocking the Video Port, Muting/Unmuting the Video Port,
+ * Querying the Connected Source, Querying the Connected Destinations, Querying the Input Switching Capability,
+ * Querying the Video Signal Presence, Querying HDCP settings (Input Port), Querying HDCP Mode,
+ * Querying the Embedded Audio Presence Muting/Unmuting the Embedded Audio
+ *
+ * @author Kevin / Symphony Dev Team<br>
+ * Created on 8/14/2023
+ * @since 1.0.0
+ */
+public enum VideoSettings {
+
+	CONNECTION_SOURCE_OUTPUT_HDMI3("VideoHDMIOutput3#ConnectedSource", "/api/V1/MEDIA/VIDEO/XP/O1/ConnectedSource"),
+	CONNECTION_SOURCE_OUTPUT_HDMI4("VideoHDMIOutput4#ConnectedSource", "/api/V1/MEDIA/VIDEO/XP/O2/ConnectedSource"),
+	CONNECTION_DESTINATIONS_INPUT_HDMI3("VideoHDMIInput3#ConnectedDestinations", "/api/V1/MEDIA/VIDEO/XP/I3/ConnectedDestinations"),
+	CONNECTION_DESTINATIONS_INPUT_HDMI4("VideoHDMIInput4#ConnectedDestinations", "/api/V1/MEDIA/VIDEO/XP/I4/ConnectedDestinations"),
+	SIGNAL_PRESENT_INPUT_HDMI3("VideoHDMIInput3#SignalPresent", "/api/V1/MEDIA/VIDEO/I3/SignalPresent"),
+	SIGNAL_PRESENT_INPUT_HDMI4("VideoHDMIInput4#SignalPresent", "/api/V1/MEDIA/VIDEO/I4/SignalPresent"),
+	SIGNAL_PRESENT_OUTPUT_HDMI3("VideoHDMIOutput3#SignalPresent", "/api/V1/MEDIA/VIDEO/I4/SignalPresent"),
+	SIGNAL_PRESENT_OUTPUT_HDMI4("VideoHDMIOutput4#SignalPresent", "/api/V1/MEDIA/VIDEO/I4/SignalPresent"),
+	DHCP_SETTINGS_INPUT_HDMI3("VideoHDMIInput3#HDCPSettings", "/api/V1/MEDIA/VIDEO/I3/HDCP/AllowedHdcpVersion"),
+	DHCP_SETTINGS_INPUT_HDMI4("VideoHDMIInput4#HDCPSettings", "api/V1/MEDIA/VIDEO/I4/HDCP/AllowedHdcpVersion"),
+	DHCP_MODE_OUTPUT_HDMI3("VideoHDMIOutput3#HDCPMode", "/api/V1/MEDIA/VIDEO/O1/HdcpMode"),
+	DHCP_MODE_OUTPUT_HDMI4("VideoHDMIOutput4#HDCPMode", "/api/V1/MEDIA/VIDEO/O2/HdcpMode"),
+	EMBEDDED_AUDIO_PRESENT_INPUT_HDMI3("VideoHDMIInput3#EmbeddedAudioPresent", "/api/V1/MEDIA/VIDEO/I3/EmbeddedAudioPresent"),
+	EMBEDDED_AUDIO_PRESENT_INPUT_HDMI4("VideoHDMIInput4#EmbeddedAudioPresent", "/api/V1/MEDIA/VIDEO/I4/EmbeddedAudioPresent"),
+	EMBEDDED_AUDIO_PRESENT_OUTPUT_HDMI3("VideoHDMIOutput3#EmbeddedAudioPresent", "/api/V1/MEDIA/VIDEO/O1/EmbeddedAudioPresent"),
+	EMBEDDED_AUDIO_PRESENT_OUTPUT_HDMI4("VideoHDMIOutput4#EmbeddedAudioPresent", "/api/V1/MEDIA/VIDEO/O2/EmbeddedAudioPresent"),
+	LOCKED_PORT_INPUT_HDMI3("VideoHDMIInput3#LockPort", "/api/V1/MEDIA/VIDEO/XP/I3/Lock"),
+	LOCKED_PORT_INPUT_HDMI4("VideoHDMIInput4#LockPort", "/api/V1/MEDIA/VIDEO/XP/I4/Lock"),
+	LOCKED_PORT_OUTPUT_HDMI3("VideoHDMIOutput3#LockPort", "/api/V1/MEDIA/VIDEO/XP/O1/Lock"),
+	LOCKED_PORT_OUTPUT_HDMI4("VideoHDMIOutput4#LockPort", "api/V1/MEDIA/VIDEO/XP/O2/Lock"),
+	MUTE_PORT_INPUT_HDMI3("VideoHDMIInput3#Mute", "/api/V1/MEDIA/VIDEO/XP/I3/Mute"),
+	MUTE_PORT_INPUT_HDMI4("VideoHDMIInput4#Mute", "/api/V1/MEDIA/VIDEO/XP/I4/Mute"),
+	MUTE_PORT_OUTPUT_HDMI3("VideoHDMIOutput3#Mute", "/api/V1/MEDIA/VIDEO/XP/O1/Mute"),
+	MUTE_PORT_OUTPUT_HDMI4("VideoHDMIOutput4#Mute", "/api/V1/MEDIA/VIDEO/XP/O2/Mute"),
+	MUTE_EMBEDDED_PORT_OUTPUT_HDMI3("VideoHDMIOutput3#MuteEmbeddedAudio", "/api/V1/MEDIA/VIDEO/O1/EmbeddedAudioMute"),
+	MUTE_EMBEDDED_PORT_OUTPUT_HDMI4("VideoHDMIOutput4#MuteEmbeddedAudio", "/api/V1/MEDIA/VIDEO/O2/EmbeddedAudioMute"),
+	MUTE_EMBEDDED_PORT_INPUT_HDMI3("VideoHDMIOutput4#MuteEmbeddedAudio", "/api/V1/MEDIA/VIDEO/I3/EmbeddedAudioMute"),
+	MUTE_EMBEDDED_PORT_INPUT_HDMI4("VideoHDMIOutput4#MuteEmbeddedAudio", "/api/V1/MEDIA/VIDEO/I4/EmbeddedAudioMute"),
+	;
+
+	/**
+	 * Constructor instance
+	 *
+	 * @param name of {@link #name}
+	 * @param request of {@link #request}
+	 */
+	VideoSettings(String name, String request) {
+		this.name = name;
+		this.request = request;
+	}
+
+	private final String name;
+	private final String request;
+
+	/**
+	 * Retrieves {@link #name}
+	 *
+	 * @return value of {@link #name}
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Retrieves {@link #request}
+	 *
+	 * @return value of {@link #request}
+	 */
+	public String getRequest() {
+		return request;
+	}
+}
