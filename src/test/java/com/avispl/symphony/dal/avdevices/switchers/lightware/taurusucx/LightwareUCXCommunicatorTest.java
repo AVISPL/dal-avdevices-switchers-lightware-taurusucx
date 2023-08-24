@@ -128,7 +128,7 @@ class LightwareUCXCommunicatorTest {
 		Assert.assertEquals("Disable", stats.get(NetworkMonitoring.DHCP_STATE.getName()));
 		Assert.assertEquals("192.168.0.100", stats.get(NetworkMonitoring.IP_ADDRESS.getName()));
 		Assert.assertEquals("192.168.0.1", stats.get(NetworkMonitoring.GATEWAY.getName()));
-		Assert.assertEquals("room-switcher", stats.get(NetworkMonitoring.HOSTNAME.getName()));
+		Assert.assertEquals("Room-switcher", stats.get(NetworkMonitoring.HOSTNAME.getName()));
 		Assert.assertEquals("255.255.255.0", stats.get(NetworkMonitoring.SUBNET_MASK.getName()));
 	}
 
@@ -310,15 +310,15 @@ class LightwareUCXCommunicatorTest {
 		Map<String, String> stats = extendedStatistics.getStatistics();
 		Assert.assertEquals("True", stats.get(LightwareConstant.AUDIO_HDMI_INPUT_3 + LightwareConstant.CONNECTED));
 		Assert.assertEquals("O3", stats.get(AudioSettings.CONNECTION_DESTINATIONS_HDMI3.getName()));
-		Assert.assertEquals("false", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI3.getName()));
+		Assert.assertEquals("False", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI3.getName()));
 
 		Assert.assertEquals("False", stats.get(LightwareConstant.AUDIO_HDMI_INPUT_4 + LightwareConstant.CONNECTED));
 		Assert.assertEquals("None", stats.get(AudioSettings.CONNECTION_DESTINATIONS_HDMI4.getName()));
-		Assert.assertEquals("false", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI4.getName()));
+		Assert.assertEquals("False", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI4.getName()));
 
 		Assert.assertEquals("True", stats.get(LightwareConstant.AUDIO_ANALOG_OUTPUT + LightwareConstant.CONNECTED));
 		Assert.assertEquals("I3", stats.get(LightwareConstant.AUDIO_ANALOG_OUTPUT + LightwareConstant.CONNECTION_SOURCE));
-		Assert.assertEquals("false", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI4.getName()));
+		Assert.assertEquals("False", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI4.getName()));
 	}
 
 	/**

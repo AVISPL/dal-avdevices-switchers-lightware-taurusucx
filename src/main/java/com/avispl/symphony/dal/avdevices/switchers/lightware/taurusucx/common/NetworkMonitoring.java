@@ -75,7 +75,8 @@ public enum NetworkMonitoring {
 					stats.put(key, value);
 					break;
 				default:
-					stats.put(key, StringUtils.isNullOrEmpty(value) ? LightwareConstant.NONE : value);
+					char firstChar = Character.toUpperCase(value.charAt(0));
+					stats.put(key, firstChar + value.substring(1));
 					break;
 			}
 		}

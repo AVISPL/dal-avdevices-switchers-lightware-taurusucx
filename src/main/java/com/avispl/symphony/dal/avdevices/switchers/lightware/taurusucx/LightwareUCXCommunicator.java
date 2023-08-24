@@ -520,13 +520,11 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 		String key = USBPortSettings.CONNECTION_SOURCE.getName();
 		String value = StringUtils.isNullOrEmpty(cacheMapOfKeyAndValue.get(key)) ? LightwareConstant.NONE : cacheMapOfKeyAndValue.get(key);
 
-		String[] usbInputs = { LightwareConstant.USB_INPUT_1, LightwareConstant.USB_INPUT_2, LightwareConstant.USB_INPUT_3, LightwareConstant.USB_INPUT_4 };
 		String[] output = new String[4];
 		String[] connectedDefault = new String[4];
-
 		for (int i = 0; i < 4; i++) {
-			if (usbInputs[i].equalsIgnoreCase(value)) {
-				output[i] = usbInputs[i];
+			if (LightwareConstant.USB_INPUTS[i].equalsIgnoreCase(value)) {
+				output[i] = LightwareConstant.USB_INPUTS[i];
 				connectedDefault[i] = LightwareConstant.TRUE;
 			}
 			stats.put(LightwareConstant.USB_HOST_PREFIX + (i + 1) + LightwareConstant.HASH + LightwareConstant.CONNECTED,
@@ -592,11 +590,27 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					}
 					break;
 				default:
-					stats.put(key, value);
+					stats.put(key, capitalizeFirstCharacter(value));
 					break;
 			}
 		}
 	}
+
+	/**
+	 * Capitalizes the first character of a given string.
+	 *
+	 * @param value The input string.
+	 * @return A new string with the first character capitalized, or the original string if it's null or empty.
+	 */
+	private static String capitalizeFirstCharacter(String value) {
+		if (value == null || value.isEmpty()) {
+			return value;
+		}
+
+		char firstChar = Character.toUpperCase(value.charAt(0));
+		return firstChar + value.substring(1);
+	}
+
 
 	/**
 	 * Populates system settings-related statistics and advanced controllable properties based on provided data.
@@ -631,7 +645,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
 					break;
 				default:
-					stats.put(key, StringUtils.isNullOrEmpty(value) ? LightwareConstant.NONE : value);
+					stats.put(key, capitalizeFirstCharacter(StringUtils.isNullOrEmpty(value) ? LightwareConstant.NONE : value));
 					break;
 			}
 		}

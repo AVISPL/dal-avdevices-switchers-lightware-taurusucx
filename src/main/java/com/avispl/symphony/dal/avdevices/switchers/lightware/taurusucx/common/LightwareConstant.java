@@ -41,11 +41,12 @@ public class LightwareConstant {
 	public static final String AUDIO_HDMI_INPUT_3 = "AudioHDMIInput3#";
 	public static final String VIDEO_HDMI_INPUT_3 = "VideoHDMIInput3#";
 	public static final String VIDEO_HDMI_INPUT_4 = "VideoHDMIInput4#";
-	public static final String VIDEO_HDMI_OUTPUT_3 = "VideoHDMIOutput3#";
-	public static final String VIDEO_HDMI_OUTPUT_4 = "VideoHDMIOutput4#";
+	public static final String VIDEO_HDMI_OUTPUT_3 = "VideoHDMIOutput1#";
+	public static final String VIDEO_HDMI_OUTPUT_4 = "VideoHDMIOutput2#";
 	public static final String NETWORK_INFORMATION = "NetworkMonitoring";
 	public static final String NETWORK_SECURITY = "NetworkSecurity#";
 	public static final String SYSTEM_SETTINGS = "SystemSettings#";
+
 	public static final String SERIAL_SETTINGS = "SerialPortConfiguration#";
 	public static final String USB_HOST_1 = "USBHost1#";
 	public static final String USB_HOST_2 = "USBHost2#";
@@ -75,4 +76,6 @@ public class LightwareConstant {
 	public static final float MIN_VOLUME_PERCENT = 0;
 	public static final float MAX_VOLUME_PERCENT = 100F;
 	public static final List<String> CONTROL_BLOCK = Arrays.asList(new String[] { "None", "Locked", "Force locked" });
+	public static final String[] USB_INPUTS = { LightwareConstant.USB_INPUT_1, LightwareConstant.USB_INPUT_2, LightwareConstant.USB_INPUT_3, LightwareConstant.USB_INPUT_4 };
+
 }

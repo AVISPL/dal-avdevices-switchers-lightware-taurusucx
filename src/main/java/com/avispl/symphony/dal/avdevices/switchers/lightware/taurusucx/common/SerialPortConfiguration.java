@@ -63,8 +63,9 @@ public enum SerialPortConfiguration {
 	public static void populateLocalStatistics(Map<String, String> stats, Map<String, String> cache) {
 		for (SerialPortConfiguration serialPortConfiguration : SerialPortConfiguration.values()) {
 			String key = serialPortConfiguration.getName();
-			String value = cache.get(key);
-			stats.put(key, StringUtils.isNullOrEmpty(value) ? LightwareConstant.NONE : value);
+			String value = StringUtils.isNullOrEmpty(cache.get(key)) ? LightwareConstant.NONE : cache.get(key);
+			char firstChar = Character.toUpperCase(value.charAt(0));
+			stats.put(key, firstChar + value.substring(1));
 		}
 	}
 }
