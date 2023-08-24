@@ -1,0 +1,1460 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/Staticip"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "192.168.0.100",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/StaticNetworkMask"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "255.255.255.0",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/StaticGatewayAddress"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "192.168.0.1",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/DhcpEnable"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/HostName"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "room-switcher",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/UID/PACKAGE/Version"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "1.0.0b2",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/UI/identifyMe"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MANAGEMENT/UI/identifyMe"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/UI/DARKMODE/Enable"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MANAGEMENT/UI/DARKMODE/Enable"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MANAGEMENT/UI/ControlLock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "locked",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/UI/ControlLock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "force locked",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/H1/ConnectedSource"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "U4",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/U1/ConnectedDestinations"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/U2/ConnectedDestinations"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/U3/ConnectedDestinations"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/U4/ConnectedDestinations"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "H1",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/USB/XP/U1/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/U1/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/USB/XP/U2/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/U2/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/USB/XP/U3/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/U3/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/USB/XP/U4/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/U4/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/USB/XP/H1/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/USB/XP/H1/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/SERVICES/HTTP/Port"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "80",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/AUTH/USER1/Name"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "admin",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/SERVICES/HTTP/AuthenticationEnable"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/ETHERNET/P4/Enable"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/ETHERNET/P4/Enable"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MANAGEMENT/NETWORK/SERVICES/HTTP/Enable"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MANAGEMENT/NETWORK/SERVICES/HTTP/Enable"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/O3/ConnectedSource"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "I3",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I3/ConnectedDestinations"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "O3",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I4/ConnectedDestinations"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/I3/SignalPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/I4/SignalPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/O3/SignalPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I3/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I3/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I4/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I4/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/XP/O3/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/O3/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "false",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I4/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/I4/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/XP/O3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/XP/O3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/I3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/I3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/I4/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/I4/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/O3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/O3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/O3/VolumedB"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "-15",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/O3/VolumedB"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "-15",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/AUDIO/O3/VolumePercent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "50",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/AUDIO/O3/VolumePercent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "50",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O2/ConnectedSource"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "I3",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O1/ConnectedSource"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "I3",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I3/ConnectedDestinations"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "[\"O1\",\"O2\"]",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I4/ConnectedDestinations"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "[]",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/I3/SignalPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/I4/SignalPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O1/SignalPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O2/SignalPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/I3/HDCP/AllowedHdcpVersion"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "HDCP 1.4",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/I4/HDCP/AllowedHdcpVersion"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "HDCP 1.4",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/I3/EmbeddedAudioPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/I4/EmbeddedAudioPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/I4/EmbeddedAudioPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/O1/EmbeddedAudioPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O1/EmbeddedAudioPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/O2/EmbeddedAudioPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O2/EmbeddedAudioPresent"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/O1/EmbeddedAudioMute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O1/EmbeddedAudioMute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/O2/EmbeddedAudioMute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O2/EmbeddedAudioMute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/I3/EmbeddedAudioMute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/I3/EmbeddedAudioMute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/I4/EmbeddedAudioMute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/I4/EmbeddedAudioMute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I3/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I3/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I4/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I4/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O1/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O1/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O2/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O2/Lock"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I3/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I4/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/I4/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O1/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O1/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O2/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O2/Mute"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "true",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/XP/O2/SWITCHABLE/I3"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "OK",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/O1/HdcpMode"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "auto",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O1/HdcpMode"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "auto",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/V1/MEDIA/VIDEO/O2/HdcpMode"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "auto",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O2/HdcpMode"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "auto",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/SERIAL/P1/Baudrate"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "19200",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/SERIAL/P1/StopBits"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "1",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/SERIAL/P1/DataBits"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "8",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/SERIAL/P1/Parity"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "Odd",
+        "status": "200"
+      }
+    }
+  ]
+}
