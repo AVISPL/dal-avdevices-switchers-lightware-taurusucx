@@ -350,8 +350,13 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 		}
 	}
 
+
 	/**
+	 * Update volume control
 	 *
+	 * @param stats the stats list of Statistics
+	 * @param advancedControllableProperties list of AdvancedControllableProperties instance
+	 * @param isVolumeControl boolean type is volume control
 	 */
 	private void updateVolumeControl(Map<String, String> stats, List<AdvancedControllableProperty> advancedControllableProperties, boolean isVolumeControl) {
 		String property = AudioSettings.VOLUME.getName();
@@ -365,6 +370,14 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 		updateValueForTheControllableProperty(property, value, stats, advancedControllableProperties);
 	}
 
+	/**
+	 * Retrieve Volume control
+	 *
+	 * @param request the request is url request
+	 * @param name the name is name of the properties control
+	 * @param isVolumeControl boolean type is volume control
+	 * @throws IllegalArgumentException if get volume error
+	 */
 	private void retrieveVolume(String request, String name, boolean isVolumeControl) {
 		try {
 			String response = doGet(request);
