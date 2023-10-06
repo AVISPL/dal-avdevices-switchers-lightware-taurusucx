@@ -12,10 +12,10 @@ package com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common;
  */
 public enum SystemSettings {
 
-	FIRMWARE_VERSION("SystemSettings#FirmwarePackageVersion", "/api/V1/MANAGEMENT/UID/PACKAGE/Version"),
-	IDENTIFYING("SystemSettings#Identify", "/api/V1/MANAGEMENT/UI/identifyMe"),
-	ENABLE_DARK_MODE("SystemSettings#EnableDarkMode", "/api/V1/MANAGEMENT/UI/DARKMODE/Enable"),
-	CONTROL_LOOK("SystemSettings#ControlLock", "/api/V1/MANAGEMENT/UI/ControlLock"),
+	FIRMWARE_VERSION("SystemSettings#FirmwarePackageVersion", "api/V1/MANAGEMENT/UID/PACKAGE/Version"),
+	IDENTIFYING("SystemSettings#Identify", "api/V1/MANAGEMENT/UI/identifyMe"),
+	ENABLE_DARK_MODE("SystemSettings#EnableDarkMode", "api/V1/MANAGEMENT/UI/DARKMODE/Enable"),
+	CONTROL_LOOK("SystemSettings#LockFrontPanel", "api/V1/MANAGEMENT/UI/ControlLock"),
 
 	;
 	/**

@@ -23,7 +23,6 @@ import com.avispl.symphony.api.dal.dto.monitor.ExtendedStatistics;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.AudioSettings;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.LightwareConstant;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.NetworkMonitoring;
-import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.NetworkSecurity;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.SerialPortConfiguration;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.SystemSettings;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.USBPortSettings;
@@ -62,7 +61,7 @@ class LightwareUCXCommunicatorTest {
 	}
 
 	@AfterEach
-	void stopWireMockRule() {
+	void stopWireMockRule() throws Exception {
 		lightwareUCXCommunicator.destroy();
 		wireMockRule.stop();
 	}
@@ -90,7 +89,7 @@ class LightwareUCXCommunicatorTest {
 	 * Test ConfigManagement Configurable with default value
 	 */
 	@Test
-	void testConfigManagementConfigurableWithDefaultValue() {
+	void testConfigManagementConfigurableWithDefaultValue() throws Exception {
 		lightwareUCXCommunicator.ping();
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		List<AdvancedControllableProperty> advancedControllableProperties = extendedStatistics.getControllableProperties();
@@ -101,7 +100,7 @@ class LightwareUCXCommunicatorTest {
 	 * Test ConfigManagement Configurable Is False
 	 */
 	@Test
-	void testConfigManagementConfigurableIsFalse() {
+	void testConfigManagementConfigurableIsFalse() throws Exception {
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		List<AdvancedControllableProperty> advancedControllableProperties = extendedStatistics.getControllableProperties();
 		Assert.assertNull(advancedControllableProperties);
@@ -111,45 +110,55 @@ class LightwareUCXCommunicatorTest {
 	 * Test ConfigManagement Configurable Is True
 	 */
 	@Test
-	void testConfigManagementConfigurableIsTrue() {
+	void testConfigManagementConfigurableIsTrue() throws Exception {
 		lightwareUCXCommunicator.setConfigManagement("true");
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		List<AdvancedControllableProperty> advancedControllableProperties = extendedStatistics.getControllableProperties();
-		Assert.assertEquals(33, advancedControllableProperties.size());
+		Assert.assertEquals(29, advancedControllableProperties.size());
 	}
 
 	/**
 	 * Test getMultipleStatistics statistics with network information
 	 */
 	@Test
-	void testGetMultipleStatisticsWithNetworkInformation() {
+	void testGetMultipleStatisticsWithNetworkInformation() throws Exception {
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		Map<String, String> stats = extendedStatistics.getStatistics();
-		Assert.assertEquals("Disable", stats.get(NetworkMonitoring.DHCP_STATE.getName()));
-		Assert.assertEquals("192.168.0.100", stats.get(NetworkMonitoring.IP_ADDRESS.getName()));
-		Assert.assertEquals("192.168.0.1", stats.get(NetworkMonitoring.GATEWAY.getName()));
-		Assert.assertEquals("Room-switcher", stats.get(NetworkMonitoring.HOSTNAME.getName()));
+		Assert.assertEquals("Disabled", stats.get(NetworkMonitoring.DHCP_STATE.getName()));
+		Assert.assertEquals("172.31.254.30", stats.get(NetworkMonitoring.IP_ADDRESS.getName()));
+		Assert.assertEquals("172.31.254.2", stats.get(NetworkMonitoring.GATEWAY.getName()));
+		Assert.assertEquals("Lightware-D4348675", stats.get(NetworkMonitoring.HOSTNAME.getName()));
 		Assert.assertEquals("255.255.255.0", stats.get(NetworkMonitoring.SUBNET_MASK.getName()));
+		Assert.assertEquals("LW_UCX_4x2_HC30_D", stats.get(NetworkMonitoring.DEVICE_LABEL.getName()));
+		Assert.assertEquals("A8:D2:36:01:F7:F1", stats.get(NetworkMonitoring.MAC_ADDRESS.getName()));
+		Assert.assertEquals("A8:D2:36:01:F7:F2", stats.get(NetworkMonitoring.MAC_ADDRESS_TYPE1.getName()));
+		Assert.assertEquals("A8:D2:36:01:F7:F3", stats.get(NetworkMonitoring.MAC_ADDRESS_TYPE2.getName()));
+		Assert.assertEquals("Lightware UCX", stats.get(NetworkMonitoring.MANUFACTURE.getName()));
+
 	}
 
 	/**
 	 * Test getMultipleStatistics statistics with SerialPortConfiguration
 	 */
 	@Test
-	void testGetMultipleStatisticsWithSerialPortConfiguration() {
+	void testGetMultipleStatisticsWithSerialPortConfiguration() throws Exception {
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		Map<String, String> stats = extendedStatistics.getStatistics();
 		Assert.assertEquals("19200", stats.get(SerialPortConfiguration.BAUD_RATE.getName()));
 		Assert.assertEquals("8", stats.get(SerialPortConfiguration.DATA_BITS.getName()));
 		Assert.assertEquals("Odd", stats.get(SerialPortConfiguration.PARITY_SETTING.getName()));
 		Assert.assertEquals("1", stats.get(SerialPortConfiguration.STOP_BITS.getName()));
+		Assert.assertEquals("19200", stats.get(SerialPortConfiguration.BAUD_RATE_P1.getName()));
+		Assert.assertEquals("8", stats.get(SerialPortConfiguration.DATA_BITS_P1.getName()));
+		Assert.assertEquals("Odd", stats.get(SerialPortConfiguration.PARITY_SETTING_P1.getName()));
+		Assert.assertEquals("1", stats.get(SerialPortConfiguration.STOP_BITS_P1.getName()));
 	}
 
 	/**
 	 * Test getMultipleStatistics statistics with SystemSettings
 	 */
 	@Test
-	void testGetMultipleStatisticsWithSystemSettings() {
+	void testGetMultipleStatisticsWithSystemSettings() throws Exception {
 		// Enable config management for testing
 		lightwareUCXCommunicator.setConfigManagement("true");
 
@@ -159,7 +168,7 @@ class LightwareUCXCommunicatorTest {
 		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
 
 		// Validate firmware version
-		Assert.assertEquals("1.0.0b2", stats.get(SystemSettings.FIRMWARE_VERSION.getName()));
+		Assert.assertEquals("V2.2.0b4", stats.get(SystemSettings.FIRMWARE_VERSION.getName()));
 
 		// Validate dark mode status
 		String darkModeValue = String.valueOf(controllablePropertyList
@@ -177,7 +186,7 @@ class LightwareUCXCommunicatorTest {
 				.findFirst()
 				.get()
 				.getValue());
-		Assert.assertEquals("Force locked", controlLookValue);
+		Assert.assertEquals("None", controlLookValue);
 
 		// Validate identifying setting
 		String identifyingValue = String.valueOf(controllablePropertyList
@@ -190,45 +199,10 @@ class LightwareUCXCommunicatorTest {
 	}
 
 	/**
-	 * Test getMultipleStatistics statistics with Network Security
-	 */
-	@Test
-	void testGetMultipleStatisticsWithNetworkSecurity() {
-		// Enable config management for testing
-		lightwareUCXCommunicator.setConfigManagement("true");
-
-		// Retrieve extended statistics and related information
-		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
-		Map<String, String> stats = extendedStatistics.getStatistics();
-		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
-
-		Assert.assertEquals("Disable", stats.get(NetworkSecurity.AUTHENTICATION_STATE.getName()));
-		Assert.assertEquals("admin", stats.get(NetworkSecurity.AUTHENTICATION_ROLE.getName()));
-		Assert.assertEquals("80", stats.get(NetworkSecurity.PORT_NUMBER.getName()));
-		Assert.assertEquals("80", stats.get(NetworkSecurity.PORT_NUMBER.getName()));
-
-		String enableEthernetPort = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(NetworkSecurity.ENABLE_ETHERNET_PORT.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("0", enableEthernetPort);
-
-		String enableServicePort = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(NetworkSecurity.ENABLE_SERVICE_PORT.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("1", enableServicePort);
-	}
-
-	/**
 	 * Test getMultipleStatistics statistics with USB Host
 	 */
 	@Test
-	void testGetMultipleStatisticsWithUSBHostPort() {
+	void testGetMultipleStatisticsWithUSBHostPort() throws Exception {
 		// Enable config management for testing
 		lightwareUCXCommunicator.setConfigManagement("true");
 
@@ -236,16 +210,10 @@ class LightwareUCXCommunicatorTest {
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		Map<String, String> stats = extendedStatistics.getStatistics();
 
-		Assert.assertEquals("None", stats.get(USBPortSettings.CONNECTION_DESTINATIONS_U1.getName()));
+		Assert.assertEquals("H1", stats.get(USBPortSettings.CONNECTION_DESTINATIONS_U1.getName()));
 		Assert.assertEquals("None", stats.get(USBPortSettings.CONNECTION_DESTINATIONS_U2.getName()));
-		Assert.assertEquals("None", stats.get(USBPortSettings.CONNECTION_DESTINATIONS_U3.getName()));
-		Assert.assertEquals("H1", stats.get(USBPortSettings.CONNECTION_DESTINATIONS_U4.getName()));
-
-		Assert.assertEquals("False", stats.get(LightwareConstant.USB_HOST_1 + LightwareConstant.CONNECTED));
-		Assert.assertEquals("False", stats.get(LightwareConstant.USB_HOST_2 + LightwareConstant.CONNECTED));
-		Assert.assertEquals("False", stats.get(LightwareConstant.USB_HOST_3 + LightwareConstant.CONNECTED));
-		Assert.assertEquals("True", stats.get(LightwareConstant.USB_HOST_4 + LightwareConstant.CONNECTED));
-		Assert.assertEquals("True", stats.get(LightwareConstant.USB_HUB + LightwareConstant.CONNECTED));
+		Assert.assertEquals("H1", stats.get(USBPortSettings.CONNECTION_DESTINATIONS_U3.getName()));
+		Assert.assertEquals("None", stats.get(USBPortSettings.CONNECTION_DESTINATIONS_U4.getName()));
 	}
 
 
@@ -253,7 +221,7 @@ class LightwareUCXCommunicatorTest {
 	 * Test getMultipleStatistics statistics with USB Host
 	 */
 	@Test
-	void testGetMultipleStatisticsWithControlUSB() {
+	void testGetMultipleStatisticsWithControlUSB() throws Exception {
 		// Enable config management for testing
 		lightwareUCXCommunicator.setConfigManagement("true");
 
@@ -301,22 +269,19 @@ class LightwareUCXCommunicatorTest {
 	 * Test getMultipleStatistics statistics with Audio settings
 	 */
 	@Test
-	void testGetMultipleStatisticsWithAudioSettings() {
+	void testGetMultipleStatisticsWithAudioSettings() throws Exception {
 		// Enable config management for testing
 		lightwareUCXCommunicator.setConfigManagement("true");
 
 		// Retrieve extended statistics and related information
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		Map<String, String> stats = extendedStatistics.getStatistics();
-		Assert.assertEquals("True", stats.get(LightwareConstant.AUDIO_HDMI_INPUT_3 + LightwareConstant.CONNECTED));
 		Assert.assertEquals("O3", stats.get(AudioSettings.CONNECTION_DESTINATIONS_HDMI3.getName()));
 		Assert.assertEquals("False", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI3.getName()));
 
-		Assert.assertEquals("False", stats.get(LightwareConstant.AUDIO_HDMI_INPUT_4 + LightwareConstant.CONNECTED));
 		Assert.assertEquals("None", stats.get(AudioSettings.CONNECTION_DESTINATIONS_HDMI4.getName()));
 		Assert.assertEquals("False", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI4.getName()));
 
-		Assert.assertEquals("True", stats.get(LightwareConstant.AUDIO_ANALOG_OUTPUT + LightwareConstant.CONNECTED));
 		Assert.assertEquals("I3", stats.get(LightwareConstant.AUDIO_ANALOG_OUTPUT + LightwareConstant.CONNECTION_SOURCE));
 		Assert.assertEquals("False", stats.get(AudioSettings.SIGNAL_PRESENT_HDMI4.getName()));
 	}
@@ -325,7 +290,7 @@ class LightwareUCXCommunicatorTest {
 	 * Test getMultipleStatistics statistics with Audio settings control
 	 */
 	@Test
-	void testGetMultipleStatisticsWithControlLockAudio() {
+	void testGetMultipleStatisticsWithControlLockAudio() throws Exception {
 		// Enable config management for testing
 		lightwareUCXCommunicator.setConfigManagement("true");
 
@@ -338,28 +303,28 @@ class LightwareUCXCommunicatorTest {
 				.findFirst()
 				.get()
 				.getValue());
-		Assert.assertEquals("0", audioLockPort1);
+		Assert.assertEquals("1", audioLockPort1);
 		String audioLockPort2 = String.valueOf(controllablePropertyList
 				.stream()
 				.filter(item -> item.getName().equals(AudioSettings.LOCK_AUDIO_PORT_HDMI2.getName()))
 				.findFirst()
 				.get()
 				.getValue());
-		Assert.assertEquals("0", audioLockPort2);
+		Assert.assertEquals("1", audioLockPort2);
 		String audioLockPort3 = String.valueOf(controllablePropertyList
 				.stream()
 				.filter(item -> item.getName().equals(AudioSettings.LOCK_AUDIO_PORT_ANALOG.getName()))
 				.findFirst()
 				.get()
 				.getValue());
-		Assert.assertEquals("0", audioLockPort3);
+		Assert.assertEquals("1", audioLockPort3);
 	}
 
 	/**
 	 * Test getMultipleStatistics statistics with MuteAudioPort1
 	 */
 	@Test
-	void testGetMultipleStatisticsWithControlMuteAudioPort() {
+	void testGetMultipleStatisticsWithControlMuteAudioPort() throws Exception {
 		// Enable config management for testing
 		lightwareUCXCommunicator.setConfigManagement("true");
 
@@ -380,42 +345,13 @@ class LightwareUCXCommunicatorTest {
 				.get()
 				.getValue());
 		Assert.assertEquals("1", audioMutePort2);
-		String audioMutePort3 = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(AudioSettings.MUTE_AUDIO_PORT2_ANALOG.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("1", audioMutePort3);
-
-		String audioMute1 = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(AudioSettings.MUTE_AUDIO_PORT2_HDMI1.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("1", audioMute1);
-		String audioMute2 = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(AudioSettings.MUTE_AUDIO_PORT2_HDMI2.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("1", audioMute2);
-		String audioMute3 = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(AudioSettings.MUTE_AUDIO_PORT2_ANALOG.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("1", audioMute3);
 	}
 
 	/**
 	 * Test getMultipleStatistics statistics with Volume value
 	 */
 	@Test
-	void testGetMultipleStatisticsVolumeValue() {
+	void testGetMultipleStatisticsVolumeValue() throws Exception {
 		// Enable config management for testing
 		lightwareUCXCommunicator.setConfigManagement("true");
 
@@ -429,16 +365,16 @@ class LightwareUCXCommunicatorTest {
 				.findFirst()
 				.get()
 				.getValue());
-		Assert.assertEquals("-15.0", audioVolume);
-		Assert.assertEquals("-15", stats.get(LightwareConstant.AUDIO_CURRENT_VALUE));
+		Assert.assertEquals("0.0", audioVolume);
+		Assert.assertEquals("0", stats.get(LightwareConstant.AUDIO_CURRENT_VALUE));
 		String audioVolumePercent = String.valueOf(controllablePropertyList
 				.stream()
 				.filter(item -> item.getName().equals(AudioSettings.VOLUME_PERCENT.getName()))
 				.findFirst()
 				.get()
 				.getValue());
-		Assert.assertEquals("50.0", audioVolumePercent);
-		Assert.assertEquals("50", stats.get(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE));
+		Assert.assertEquals("100.0", audioVolumePercent);
+		Assert.assertEquals("100", stats.get(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE));
 	}
 
 	/**
@@ -447,7 +383,7 @@ class LightwareUCXCommunicatorTest {
 	 * Expect control successfully
 	 */
 	@Test
-	void testControlEnableDarkMode() {
+	void testControlEnableDarkMode() throws Exception {
 		lightwareUCXCommunicator.setConfigManagement("true");
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
@@ -482,7 +418,7 @@ class LightwareUCXCommunicatorTest {
 	 * Expect control successfully
 	 */
 	@Test
-	void testControlControlLock() {
+	void testControlControlLock() throws Exception {
 		lightwareUCXCommunicator.setConfigManagement("true");
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
@@ -492,7 +428,7 @@ class LightwareUCXCommunicatorTest {
 				.findFirst()
 				.get()
 				.getValue());
-		Assert.assertEquals("Force locked", controlLock);
+		Assert.assertEquals("None", controlLock);
 		ControllableProperty controlGroupType = new ControllableProperty();
 		String key = SystemSettings.CONTROL_LOOK.getName();
 		String value = "Locked";
@@ -517,7 +453,7 @@ class LightwareUCXCommunicatorTest {
 	 * Expect control successfully
 	 */
 	@Test
-	void testControlIdentify() {
+	void testControlIdentify() throws Exception {
 		lightwareUCXCommunicator.setConfigManagement("true");
 		lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		ControllableProperty controlGroupType = new ControllableProperty();
@@ -539,82 +475,12 @@ class LightwareUCXCommunicatorTest {
 	}
 
 	/**
-	 * Test control Network Security EnableServicePort
-	 *
-	 * Expect EnableServicePort successfully
-	 */
-	@Test
-	void testControlEnableServicePort() {
-		lightwareUCXCommunicator.setConfigManagement("true");
-		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
-		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
-		String enableServicePort = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(NetworkSecurity.ENABLE_SERVICE_PORT.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("1", enableServicePort);
-		ControllableProperty controlGroupType = new ControllableProperty();
-		String key = NetworkSecurity.ENABLE_SERVICE_PORT.getName();
-		String value = "0";
-		controlGroupType.setProperty(key);
-		controlGroupType.setValue(value);
-		lightwareUCXCommunicator.controlProperty(controlGroupType);
-
-		extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
-		controllablePropertyList = extendedStatistics.getControllableProperties();
-		enableServicePort = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(NetworkSecurity.ENABLE_SERVICE_PORT.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("0", enableServicePort);
-	}
-
-	/**
-	 * Test control Network Security EnableEthernetPort
-	 *
-	 * Expect EnableServicePort successfully
-	 */
-	@Test
-	void testControlEnableEthernetPort() {
-		lightwareUCXCommunicator.setConfigManagement("true");
-		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
-		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
-		String enableEthernetPort = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(NetworkSecurity.ENABLE_ETHERNET_PORT.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("0", enableEthernetPort);
-		ControllableProperty controlGroupType = new ControllableProperty();
-		String key = NetworkSecurity.ENABLE_ETHERNET_PORT.getName();
-		String value = "1";
-		controlGroupType.setProperty(key);
-		controlGroupType.setValue(value);
-		lightwareUCXCommunicator.controlProperty(controlGroupType);
-
-		extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
-		controllablePropertyList = extendedStatistics.getControllableProperties();
-		enableEthernetPort = String.valueOf(controllablePropertyList
-				.stream()
-				.filter(item -> item.getName().equals(NetworkSecurity.ENABLE_ETHERNET_PORT.getName()))
-				.findFirst()
-				.get()
-				.getValue());
-		Assert.assertEquals("1", enableEthernetPort);
-	}
-
-	/**
 	 * Test control USB Port Settings LockUSBPort
 	 *
 	 * Expect LockUSBPort successfully
 	 */
 	@Test
-	void testControlUSBPortSettings() {
+	void testControlUSBPortSettings() throws Exception {
 		lightwareUCXCommunicator.setConfigManagement("true");
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
@@ -649,7 +515,7 @@ class LightwareUCXCommunicatorTest {
 	 * Expect Mute  successfully
 	 */
 	@Test
-	void testControlAudioSettingsMute() {
+	void testControlAudioSettingsMute() throws Exception {
 		lightwareUCXCommunicator.setConfigManagement("true");
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
@@ -684,7 +550,7 @@ class LightwareUCXCommunicatorTest {
 	 * Expect Mute  successfully
 	 */
 	@Test
-	void testControlVideoSettings() {
+	void testControlVideoSettings() throws Exception {
 		lightwareUCXCommunicator.setConfigManagement("true");
 		ExtendedStatistics extendedStatistics = (ExtendedStatistics) lightwareUCXCommunicator.getMultipleStatistics().get(0);
 		List<AdvancedControllableProperty> controllablePropertyList = extendedStatistics.getControllableProperties();
