@@ -18,6 +18,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.util.CollectionUtils;
 
 import javax.security.auth.login.LoginException;
@@ -313,6 +315,18 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 
 	/**
 	 * {@inheritDoc}
+	 * set Basic authentication into Header of Request
+	 */
+	@Override
+	protected HttpHeaders putExtraRequestHeaders(HttpMethod httpMethod, String uri, HttpHeaders headers) {
+		if (!StringUtils.isNullOrEmpty(this.getLogin()) && !StringUtils.isNullOrEmpty(this.getPassword())) {
+			headers.setBasicAuth(this.getLogin(), this.getPassword());
+		}
+		return headers;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void internalDestroy() {
@@ -495,7 +509,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 	 * @param <T> The type of the enum.
 	 * @throws LoginException if user config invalid username and password
 	 */
-	private <T extends Enum<T>> void retrieveDetailsByEnumType(Class<?> enumType) throws LoginException {
+	private <T extends Enum<T>> void retrieveDetailsByEnumType(Class<?> enumType) throws Exception {
 		try {
 			for (Object metric : enumType.getEnumConstants()) {
 				String key = metric.getClass().getMethod(LightwareConstant.GET_NAME).invoke(metric).toString();
@@ -504,19 +518,25 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 				}
 				String request = metric.getClass().getMethod(LightwareConstant.GET_REQUEST).invoke(metric).toString();
 				noOfRequest++;
-				String response = doGet(request);
-				if (StringUtils.isNullOrEmpty(response) || LightwareConstant.NULL.equalsIgnoreCase(response)) {
-					response = LightwareConstant.NONE;
+				try {
+					String response = doGet(request);
+					if (StringUtils.isNullOrEmpty(response) || LightwareConstant.NULL.equalsIgnoreCase(response)) {
+						response = LightwareConstant.NONE;
+					}
+					cacheMapOfKeyAndValue.put(key, response.trim());
+				} catch (SocketTimeoutException | ConnectException tex) {
+					throw new RuntimeException("Socket connection timed out", tex);
+				} catch (LoginException ex) {
+					throw new LoginException("Unauthorized with username and password");
+				} catch (Exception e) {
+					failMonitor++;
+					logger.error(String.format("Error when retrieving %s", enumType.getName()), e);
 				}
-				cacheMapOfKeyAndValue.put(key, response.trim());
 			}
-		} catch (SocketTimeoutException | ConnectException tex) {
-			throw new RuntimeException("Socket connection timed out", tex);
-		} catch (LoginException ex) {
-			throw new LoginException("Unauthorized with username and password");
-		} catch (Exception e) {
-			failMonitor = failMonitor + enumType.getEnumConstants().length;
-			logger.error(String.format("Error when retrieving %s", enumType.getName()), e);
+		} catch (Exception exc) {
+			if (exc instanceof SocketTimeoutException || exc instanceof LoginException || exc instanceof ConnectException) {
+				throw exc;
+			}
 		}
 	}
 
@@ -583,7 +603,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.FALSE, LightwareConstant.TRUE);
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						continue;
+						break;
 					}
 					stats.put(key, LightwareConstant.NONE);
 					break;
@@ -607,7 +627,6 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 			String key = audioSettings.getName();
 			String value = StringUtils.isNullOrEmpty(cache.get(key)) ? LightwareConstant.NONE : cache.get(key);
 			switch (audioSettings) {
-
 				case CONNECTION_DESTINATIONS_HDMI3:
 				case CONNECTION_DESTINATIONS_HDMI4:
 				case CONNECTION_SOURCE:
@@ -629,37 +648,40 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.FALSE, LightwareConstant.TRUE);
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						continue;
+						break;
 					}
 					stats.put(key, LightwareConstant.NONE);
 					break;
 				case VOLUME:
-					stats.put(key, value);
 					if (!LightwareConstant.NONE.equals(value)) {
 						AdvancedControllableProperty control = createSlider(statsControl, key, String.valueOf(LightwareConstant.MIN_VOLUME), String.valueOf(LightwareConstant.MAX_VOLUME),
 								LightwareConstant.MIN_VOLUME, LightwareConstant.MAX_VOLUME, Float.valueOf(value));
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						statsControl.put(LightwareConstant.AUDIO_CURRENT_VALUE, value);
+						statsControl.put(LightwareConstant.AUDIO_CURRENT_VALUE, String.valueOf(Float.parseFloat(value)));
+						break;
 					}
+					stats.put(key, value);
 					break;
 				case BALANCE:
-					stats.put(key, value);
 					if (!LightwareConstant.NONE.equals(value)) {
 						AdvancedControllableProperty control = createSlider(statsControl, key, String.valueOf(LightwareConstant.MIN_BALANCE), String.valueOf(LightwareConstant.MAX_BALANCE),
 								LightwareConstant.MIN_BALANCE, LightwareConstant.MAX_BALANCE, Float.valueOf(value));
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						statsControl.put(LightwareConstant.BALANCE_CURRENT_VALUE, value);
+						statsControl.put(LightwareConstant.BALANCE_CURRENT_VALUE, String.valueOf(Float.parseFloat(value)));
+						break;
 					}
+					stats.put(key, value);
 					break;
 				case VOLUME_PERCENT:
-					stats.put(key, value);
 					if (!LightwareConstant.NONE.equals(value)) {
 						AdvancedControllableProperty controlVolumePercent = createSlider(statsControl, key, String.valueOf(LightwareConstant.MIN_VOLUME_PERCENT),
 								String.valueOf(LightwareConstant.MAX_VOLUME_PERCENT),
 								LightwareConstant.MIN_VOLUME_PERCENT, LightwareConstant.MAX_VOLUME_PERCENT, Float.valueOf(value));
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, controlVolumePercent);
-						statsControl.put(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE, value);
+						statsControl.put(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE, String.valueOf(Float.parseFloat(value)));
+						break;
 					}
+					stats.put(key, value);
 					break;
 				default:
 					stats.put(key, capitalizeFirstCharacter(value));
@@ -686,7 +708,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.FALSE, LightwareConstant.TRUE);
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						continue;
+						break;
 					}
 					stats.put(key, LightwareConstant.NONE);
 					break;
@@ -696,9 +718,13 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					break;
 				case CONTROL_LOOK:
 					String finalValue = value;
-					value = LightwareConstant.CONTROL_BLOCK.stream().filter(item -> item.equalsIgnoreCase(finalValue)).findFirst().orElse(LightwareConstant.NONE);
-					AdvancedControllableProperty control = createDropdown(key, LightwareConstant.CONTROL_BLOCK.toArray(new String[0]), value);
-					addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
+					if (!StringUtils.isNullOrEmpty(value)) {
+						value = LightwareConstant.CONTROL_BLOCK.stream().filter(item -> item.equalsIgnoreCase(finalValue)).findFirst().orElse(LightwareConstant.NONE);
+						AdvancedControllableProperty control = createDropdown(key, LightwareConstant.CONTROL_BLOCK.toArray(new String[0]), value);
+						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
+						break;
+					}
+					stats.put(key, value);
 					break;
 				default:
 					stats.put(key, capitalizeFirstCharacter(StringUtils.isNullOrEmpty(value) ? LightwareConstant.NONE : value));
@@ -765,9 +791,9 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.AUTO, LightwareConstant.ALWAYS);
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-					} else {
-						stats.put(key, LightwareConstant.NONE);
+						break;
 					}
+					stats.put(key, LightwareConstant.NONE);
 					break;
 				default:
 					stats.put(key, StringUtils.isNullOrEmpty(value) ? LightwareConstant.NONE : value);
