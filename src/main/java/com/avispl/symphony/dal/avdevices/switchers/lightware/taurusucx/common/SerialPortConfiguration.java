@@ -16,10 +16,14 @@ import com.avispl.symphony.dal.util.StringUtils;
  */
 public enum SerialPortConfiguration {
 
-	BAUD_RATE("SerialPortConfiguration#BaudRate", "/api/V1/MEDIA/SERIAL/P1/Baudrate"),
-	STOP_BITS("SerialPortConfiguration#StopBits", "/api/V1/MEDIA/SERIAL/P1/StopBits"),
-	DATA_BITS("SerialPortConfiguration#DataBits", "/api/V1/MEDIA/SERIAL/P1/DataBits"),
-	PARITY_SETTING("SerialPortConfiguration#ParitySetting", "/api/V1/MEDIA/SERIAL/P1/Parity"),
+	BAUD_RATE("SerialPort1Configuration#BaudRate(bps)", "api/V1/MEDIA/SERIAL/P1/Baudrate"),
+	STOP_BITS("SerialPort1Configuration#StopBits", "api/V1/MEDIA/SERIAL/P1/StopBits"),
+	DATA_BITS("SerialPort1Configuration#DataBits", "api/V1/MEDIA/SERIAL/P1/DataBits"),
+	PARITY_SETTING("SerialPort1Configuration#Parity", "api/V1/MEDIA/SERIAL/P1/Parity"),
+	BAUD_RATE_P1("SerialPort2Configuration#BaudRate(bps)", "api/V1/MEDIA/SERIAL/P2/Baudrate"),
+	STOP_BITS_P1("SerialPort2Configuration#StopBits", "api/V1/MEDIA/SERIAL/P2/StopBits"),
+	DATA_BITS_P1("SerialPort2Configuration#DataBits", "api/V1/MEDIA/SERIAL/P2/DataBits"),
+	PARITY_SETTING_P1("SerialPort2Configuration#Parity", "api/V1/MEDIA/SERIAL/P2/Parity"),
 	;
 
 	/**

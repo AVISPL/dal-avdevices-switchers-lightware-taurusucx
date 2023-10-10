@@ -6,6 +6,7 @@ package com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -17,7 +18,11 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.util.CollectionUtils;
+
+import javax.security.auth.login.LoginException;
 
 import com.avispl.symphony.api.dal.control.Controller;
 import com.avispl.symphony.api.dal.dto.control.AdvancedControllableProperty;
@@ -109,21 +114,35 @@ import com.avispl.symphony.dal.util.StringUtils;
  */
 public class LightwareUCXCommunicator extends RestCommunicator implements Monitorable, Controller {
 
-	private String configManagement;
-	private boolean isConfigManagement;
-	private boolean isEmergencyDelivery;
-	private ExtendedStatistics localExtendedStatistics;
-	private int failMonitor = 0;
-	private int noOfRequest = 0;
 	/**
 	 * store cache Map<String,String> are Key and value of it
 	 */
 	private final Map<String, String> cacheMapOfKeyAndValue = new HashMap<>();
-
 	/**
 	 * reentrantLock is a reentrant lock used for synchronization.
 	 */
 	private final ReentrantLock reentrantLock = new ReentrantLock();
+	private ExtendedStatistics localExtendedStatistics;
+	private String configManagement;
+	private boolean isConfigManagement;
+	private boolean isEmergencyDelivery;
+	private int failMonitor = 0;
+	private int noOfRequest = 0;
+
+	/**
+	 * Capitalizes the first character of a given string.
+	 *
+	 * @param value The input string.
+	 * @return A new string with the first character capitalized, or the original string if it's null or empty.
+	 */
+	private static String capitalizeFirstCharacter(String value) {
+		if (value == null || value.isEmpty()) {
+			return value;
+		}
+
+		char firstChar = Character.toUpperCase(value.charAt(0));
+		return firstChar + value.substring(1);
+	}
 
 	/**
 	 * Retrieves {@link #configManagement}
@@ -145,53 +164,9 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 
 	/**
 	 * {@inheritDoc}
-	 * <p>
-	 *
-	 * Check for available devices before retrieving the value
-	 * ping latency information to Symphony
 	 */
 	@Override
-	public int ping() {
-		if (isInitialized()) {
-			long pingResultTotal = 0L;
-
-			for (int i = 0; i < this.getPingAttempts(); i++) {
-				long startTime = System.currentTimeMillis();
-
-				try (Socket puSocketConnection = new Socket(this.host, this.getPort())) {
-					puSocketConnection.setSoTimeout(this.getPingTimeout());
-					if (puSocketConnection.isConnected()) {
-						long pingResult = System.currentTimeMillis() - startTime;
-						pingResultTotal += pingResult;
-						if (this.logger.isTraceEnabled()) {
-							this.logger.trace(String.format("PING OK: Attempt #%s to connect to %s on port %s succeeded in %s ms", i + 1, host, this.getPort(), pingResult));
-						}
-					} else {
-						if (this.logger.isDebugEnabled()) {
-							this.logger.debug(String.format("PING DISCONNECTED: Connection to %s did not succeed within the timeout period of %sms", host, this.getPingTimeout()));
-						}
-						return this.getPingTimeout();
-					}
-				} catch (SocketTimeoutException | ConnectException tex) {
-					throw new RuntimeException("Socket connection timed out", tex);
-				} catch (Exception e) {
-					if (this.logger.isWarnEnabled()) {
-						this.logger.warn(String.format("PING TIMEOUT: Connection to %s did not succeed, UNKNOWN ERROR %s: ", host, e.getMessage()));
-					}
-					return this.getPingTimeout();
-				}
-			}
-			return Math.max(1, Math.toIntExact(pingResultTotal / this.getPingAttempts()));
-		} else {
-			throw new IllegalStateException("Cannot use device class without calling init() first");
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Statistics> getMultipleStatistics() {
+	public List<Statistics> getMultipleStatistics() throws Exception {
 		reentrantLock.lock();
 		try {
 			ExtendedStatistics extendedStatistics = new ExtendedStatistics();
@@ -227,6 +202,52 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 
 	/**
 	 * {@inheritDoc}
+	 * <p>
+	 *
+	 * Check for available devices before retrieving the value
+	 * ping latency information to Symphony
+	 */
+	@Override
+	public int ping() throws Exception {
+		if (isInitialized()) {
+			long pingResultTotal = 0L;
+
+			for (int i = 0; i < this.getPingAttempts(); i++) {
+				long startTime = System.currentTimeMillis();
+
+				try (Socket puSocketConnection = new Socket(this.host, this.getPort())) {
+					puSocketConnection.setSoTimeout(this.getPingTimeout());
+					if (puSocketConnection.isConnected()) {
+						long pingResult = System.currentTimeMillis() - startTime;
+						pingResultTotal += pingResult;
+						if (this.logger.isTraceEnabled()) {
+							this.logger.trace(String.format("PING OK: Attempt #%s to connect to %s on port %s succeeded in %s ms", i + 1, host, this.getPort(), pingResult));
+						}
+					} else {
+						if (this.logger.isDebugEnabled()) {
+							this.logger.debug(String.format("PING DISCONNECTED: Connection to %s did not succeed within the timeout period of %sms", host, this.getPingTimeout()));
+						}
+						return this.getPingTimeout();
+					}
+				} catch (SocketTimeoutException | ConnectException tex) {
+					throw new RuntimeException("Socket connection timed out", tex);
+				} catch (UnknownHostException ex) {
+					throw new UnknownHostException(String.format("Connection timed out, UNKNOWN host %s", host));
+				} catch (Exception e) {
+					if (this.logger.isWarnEnabled()) {
+						this.logger.warn(String.format("PING TIMEOUT: Connection to %s did not succeed, UNKNOWN ERROR %s: ", host, e.getMessage()));
+					}
+					return this.getPingTimeout();
+				}
+			}
+			return Math.max(1, Math.toIntExact(pingResultTotal / this.getPingAttempts()));
+		} else {
+			throw new IllegalStateException("Cannot use device class without calling init() first");
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void controlProperty(ControllableProperty controllableProperty) {
@@ -250,7 +271,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 			String result = getValueByPropertyName(controlGroupType, value, property);
 			controlGroupTypeByPropertyName(controlGroupType.getEnumType(), property, result);
 			updateValueForTheControllableProperty(property, value, stats, advancedControllableProperties);
-			updateValueWithSliderControl(stats, value, property);
+			updateValueWithSliderControl(stats, value, property, advancedControllableProperties);
 		} finally {
 			reentrantLock.unlock();
 		}
@@ -294,6 +315,18 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 
 	/**
 	 * {@inheritDoc}
+	 * set Basic authentication into Header of Request
+	 */
+	@Override
+	protected HttpHeaders putExtraRequestHeaders(HttpMethod httpMethod, String uri, HttpHeaders headers) {
+		if (!StringUtils.isNullOrEmpty(this.getLogin()) && !StringUtils.isNullOrEmpty(this.getPassword())) {
+			headers.setBasicAuth(this.getLogin(), this.getPassword());
+		}
+		return headers;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void internalDestroy() {
@@ -312,13 +345,68 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 	 * @param stats The map containing statistics to be updated.
 	 * @param value The new value to be updated.
 	 * @param property The property associated with the value.
+	 * @param advancedControllableProperties A list of advanced controllable properties to be populated.
 	 */
-	private void updateValueWithSliderControl(Map<String, String> stats, String value, String property) {
+	private void updateValueWithSliderControl(Map<String, String> stats, String value, String property,
+			List<AdvancedControllableProperty> advancedControllableProperties) {
 		if (AudioSettings.VOLUME.getName().equals(property)) {
 			stats.put(LightwareConstant.AUDIO_CURRENT_VALUE, value);
+			retrieveVolume(AudioSettings.VOLUME_PERCENT.getRequest(), AudioSettings.VOLUME_PERCENT.getName(), true);
+			updateVolumeControl(stats, advancedControllableProperties, true);
 		}
 		if (AudioSettings.VOLUME_PERCENT.getName().equals(property)) {
 			stats.put(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE, value);
+			retrieveVolume(AudioSettings.VOLUME.getRequest(), AudioSettings.VOLUME.getName(), true);
+			updateVolumeControl(stats, advancedControllableProperties, false);
+		}
+		if (AudioSettings.BALANCE.getName().equals(property)) {
+			stats.put(LightwareConstant.BALANCE_CURRENT_VALUE, value);
+		}
+	}
+
+
+	/**
+	 * Update volume control
+	 *
+	 * @param stats the stats list of Statistics
+	 * @param advancedControllableProperties list of AdvancedControllableProperties instance
+	 * @param isVolumeControl boolean type is volume control
+	 */
+	private void updateVolumeControl(Map<String, String> stats, List<AdvancedControllableProperty> advancedControllableProperties, boolean isVolumeControl) {
+		String property = AudioSettings.VOLUME.getName();
+		String key = LightwareConstant.AUDIO_CURRENT_VALUE;
+		if (isVolumeControl) {
+			key = LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE;
+			property = AudioSettings.VOLUME_PERCENT.getName();
+		}
+		String value = StringUtils.isNullOrEmpty(cacheMapOfKeyAndValue.get(property)) ? LightwareConstant.NONE : cacheMapOfKeyAndValue.get(property);
+		stats.put(key, value);
+		updateValueForTheControllableProperty(property, value, stats, advancedControllableProperties);
+	}
+
+	/**
+	 * Retrieve Volume control
+	 *
+	 * @param request the request is url request
+	 * @param name the name is name of the properties control
+	 * @param isVolumeControl boolean type is volume control
+	 * @throws IllegalArgumentException if get volume error
+	 */
+	private void retrieveVolume(String request, String name, boolean isVolumeControl) {
+		try {
+			String response = doGet(request);
+			if (StringUtils.isNullOrEmpty(response) || LightwareConstant.NULL.equalsIgnoreCase(response)) {
+				response = LightwareConstant.NONE;
+			}
+			cacheMapOfKeyAndValue.put(name, response.trim());
+		} catch (Exception e) {
+			String errorMessage;
+			if (isVolumeControl) {
+				errorMessage = "Control Volume(%) successfully, But can't update the Volume(dB) value";
+			} else {
+				errorMessage = "Control Volume(dB) successfully, But can't update the Volume(%) value";
+			}
+			throw new IllegalArgumentException(errorMessage, e);
 		}
 	}
 
@@ -334,7 +422,8 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 		String result;
 		switch (enumType) {
 			case AUDIO_ANALOG:
-				if (AudioSettings.VOLUME.getName().equals(property) || AudioSettings.VOLUME_PERCENT.getName().equals(property)) {
+				if (AudioSettings.VOLUME.getName().equals(property) ||
+						AudioSettings.VOLUME_PERCENT.getName().equals(property) || AudioSettings.BALANCE.getName().equals(property)) {
 					result = value.trim();
 					break;
 				}
@@ -394,7 +483,6 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 		}
 	}
 
-
 	/**
 	 * Populates network information using the provided stats map and cached key-value data.
 	 *
@@ -406,9 +494,8 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 		//populate monitoring properties
 		NetworkMonitoring.populateLocalStatistics(stats, cacheMapOfKeyAndValue);
 		SerialPortConfiguration.populateLocalStatistics(stats, cacheMapOfKeyAndValue);
-
+		populateNetworkSecurity(stats, cacheMapOfKeyAndValue);
 		//populate controlling properties
-		populateNetworkSecurity(stats, statsControl, cacheMapOfKeyAndValue, advancedControllableProperties);
 		populateSystemSettings(stats, statsControl, cacheMapOfKeyAndValue, advancedControllableProperties);
 		populateUSBPortSettings(stats, statsControl, cacheMapOfKeyAndValue, advancedControllableProperties);
 		populateAudioSettings(stats, statsControl, cacheMapOfKeyAndValue, advancedControllableProperties);
@@ -420,25 +507,36 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 	 *
 	 * @param enumType The enum class representing the monitoring and controlling properties.
 	 * @param <T> The type of the enum.
+	 * @throws LoginException if user config invalid username and password
 	 */
-	private <T extends Enum<T>> void retrieveDetailsByEnumType(Class<?> enumType) {
+	private <T extends Enum<T>> void retrieveDetailsByEnumType(Class<?> enumType) throws Exception {
 		try {
 			for (Object metric : enumType.getEnumConstants()) {
-				noOfRequest++;
 				String key = metric.getClass().getMethod(LightwareConstant.GET_NAME).invoke(metric).toString();
-				String request = metric.getClass().getMethod(LightwareConstant.GET_REQUEST).invoke(metric).toString();
-
-				String response = doGet(request);
-				if (StringUtils.isNullOrEmpty(response) || LightwareConstant.NULL.equalsIgnoreCase(response)) {
-					response = LightwareConstant.NONE;
+				if (SystemSettings.IDENTIFYING.getName().equals(key)) {
+					continue;
 				}
-				cacheMapOfKeyAndValue.put(key, response.trim());
+				String request = metric.getClass().getMethod(LightwareConstant.GET_REQUEST).invoke(metric).toString();
+				noOfRequest++;
+				try {
+					String response = doGet(request);
+					if (StringUtils.isNullOrEmpty(response) || LightwareConstant.NULL.equalsIgnoreCase(response)) {
+						response = LightwareConstant.NONE;
+					}
+					cacheMapOfKeyAndValue.put(key, response.trim());
+				} catch (SocketTimeoutException | ConnectException tex) {
+					throw new RuntimeException("Socket connection timed out", tex);
+				} catch (LoginException ex) {
+					throw new LoginException("Unauthorized with username and password");
+				} catch (Exception e) {
+					failMonitor++;
+					logger.error(String.format("Error when retrieving %s", enumType.getName()), e);
+				}
 			}
-		} catch (SocketTimeoutException | ConnectException tex) {
-			throw new RuntimeException("Socket connection timed out", tex);
-		} catch (Exception e) {
-			failMonitor = failMonitor + enumType.getEnumConstants().length;
-			logger.error(String.format("Error when retrieving %s", enumType.getName()), e);
+		} catch (Exception exc) {
+			if (exc instanceof SocketTimeoutException || exc instanceof LoginException || exc instanceof ConnectException) {
+				throw exc;
+			}
 		}
 	}
 
@@ -446,27 +544,24 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 	 * Populates network security-related statistics and advanced controllable properties based on provided data.
 	 *
 	 * @param stats the stats are list of Statistics
-	 * @param statsControl the stats are list of Statistics for the control properties
 	 * @param cache a map containing cached values for network security keys.
-	 * @param advancedControllableProperties A list of advanced controllable properties to be populated.
 	 */
-	private void populateNetworkSecurity(Map<String, String> stats, Map<String, String> statsControl, Map<String, String> cache, List<AdvancedControllableProperty> advancedControllableProperties) {
+	private void populateNetworkSecurity(Map<String, String> stats, Map<String, String> cache) {
 		for (NetworkSecurity networkSecurity : NetworkSecurity.values()) {
 			String key = networkSecurity.getName();
 			String value = StringUtils.isNullOrEmpty(cache.get(key)) ? LightwareConstant.NONE : cache.get(key);
 			switch (networkSecurity) {
-				case ENABLE_SERVICE_PORT:
-				case ENABLE_ETHERNET_PORT:
-					int portValue = convertStringToInt(value);
-					if (portValue != -1) {
-						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.FALSE, LightwareConstant.TRUE);
-						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						continue;
-					}
-					statsControl.put(key, LightwareConstant.NONE);
-					break;
-				case AUTHENTICATION_STATE:
-					stats.put(key, convertStringToString(value));
+				case HTTP_AUTHENTICATION_STATE:
+				case HTTPS_AUTHENTICATION_STATE:
+				case ENABLE_ETHERNET_PORT1:
+				case ENABLE_ETHERNET_PORT2:
+				case ENABLE_ETHERNET_PORT3:
+				case ENABLE_ETHERNET_PORT4:
+				case ENABLE_ETHERNET_PORT5:
+				case HTTP_ENABLE_SERVICE_PORT:
+				case HTTPS_ENABLE_SERVICE_PORT:
+					value = convertStringToString(value);
+					stats.put(key, LightwareConstant.NONE.equals(value) ? value : value.concat("d"));
 					break;
 				default:
 					stats.put(key, value);
@@ -488,8 +583,16 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 			String key = usbPortSettings.getName();
 			String value = StringUtils.isNullOrEmpty(cache.get(key)) ? LightwareConstant.NONE : cache.get(key);
 			switch (usbPortSettings) {
+				case CONNECTION_DESTINATIONS_U1:
+				case CONNECTION_DESTINATIONS_U2:
+				case CONNECTION_DESTINATIONS_U3:
+				case CONNECTION_DESTINATIONS_U4:
 				case CONNECTION_SOURCE:
-					checkTheConnectionSourceVideoByInputAndOutput(stats);
+					value = capitalizeFirstCharacter(value);
+					if (LightwareConstant.NUMBER_ONE.equalsIgnoreCase(value)) {
+						value = LightwareConstant.NONE;
+					}
+					stats.put(key, value);
 					break;
 				case LOCKED_USB_PORT_U1:
 				case LOCKED_USB_PORT_U2:
@@ -500,41 +603,15 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.FALSE, LightwareConstant.TRUE);
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						continue;
+						break;
 					}
 					stats.put(key, LightwareConstant.NONE);
 					break;
 				default:
-					stats.put(key, value);
+					stats.put(key, LightwareConstant.NUMBER_ONE.equalsIgnoreCase(value) ? LightwareConstant.NONE : value);
 					break;
 			}
 		}
-	}
-
-	/**
-	 * Checks the connection sources for video by input and output, and populates the provided stats map with the results.
-	 *
-	 * @param stats the stats are list of Statistics
-	 */
-	private void checkTheConnectionSourceVideoByInputAndOutput(Map<String, String> stats) {
-		String key = USBPortSettings.CONNECTION_SOURCE.getName();
-		String value = StringUtils.isNullOrEmpty(cacheMapOfKeyAndValue.get(key)) ? LightwareConstant.NONE : cacheMapOfKeyAndValue.get(key);
-
-		String[] output = new String[4];
-		String[] connectedDefault = new String[4];
-		for (int i = 0; i < 4; i++) {
-			if (LightwareConstant.USB_INPUTS[i].equalsIgnoreCase(value)) {
-				output[i] = LightwareConstant.USB_INPUTS[i];
-				connectedDefault[i] = LightwareConstant.TRUE;
-			}
-			stats.put(LightwareConstant.USB_HOST_PREFIX + (i + 1) + LightwareConstant.HASH + LightwareConstant.CONNECTED,
-					StringUtils.isNullOrEmpty(connectedDefault[i]) ? LightwareConstant.FALSE : connectedDefault[i]);
-		}
-
-		String connectedHub = LightwareConstant.NONE.equals(value) ? LightwareConstant.FALSE : LightwareConstant.TRUE;
-
-		stats.put(LightwareConstant.USB_HUB + LightwareConstant.CONNECTED, connectedHub);
-		stats.put(LightwareConstant.USB_HUB + LightwareConstant.CONNECTION_SOURCE, value);
 	}
 
 	/**
@@ -550,8 +627,16 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 			String key = audioSettings.getName();
 			String value = StringUtils.isNullOrEmpty(cache.get(key)) ? LightwareConstant.NONE : cache.get(key);
 			switch (audioSettings) {
+				case CONNECTION_DESTINATIONS_HDMI3:
+				case CONNECTION_DESTINATIONS_HDMI4:
 				case CONNECTION_SOURCE:
-					checkTheConnectionSourceByInputAndOutput(stats);
+				case CONNECTED_INPUT_HDMI1:
+				case CONNECTED_INPUT_HDMI2:
+					value = capitalizeFirstCharacter(value);
+					if (LightwareConstant.NUMBER_ONE.equalsIgnoreCase(value)) {
+						value = LightwareConstant.NONE;
+					}
+					stats.put(key, value);
 					break;
 				case LOCK_AUDIO_PORT_ANALOG:
 				case LOCK_AUDIO_PORT_HDMI1:
@@ -559,35 +644,44 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 				case MUTE_AUDIO_PORT_ANALOG:
 				case MUTE_AUDIO_PORT_HDMI1:
 				case MUTE_AUDIO_PORT_HDMI2:
-				case MUTE_AUDIO_PORT2_ANALOG:
-				case MUTE_AUDIO_PORT2_HDMI1:
-				case MUTE_AUDIO_PORT2_HDMI2:
 					int portValue = convertStringToInt(value);
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.FALSE, LightwareConstant.TRUE);
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						continue;
+						break;
 					}
 					stats.put(key, LightwareConstant.NONE);
 					break;
 				case VOLUME:
-					stats.put(key, value);
 					if (!LightwareConstant.NONE.equals(value)) {
 						AdvancedControllableProperty control = createSlider(statsControl, key, String.valueOf(LightwareConstant.MIN_VOLUME), String.valueOf(LightwareConstant.MAX_VOLUME),
 								LightwareConstant.MIN_VOLUME, LightwareConstant.MAX_VOLUME, Float.valueOf(value));
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						statsControl.put(LightwareConstant.AUDIO_CURRENT_VALUE, value);
+						statsControl.put(LightwareConstant.AUDIO_CURRENT_VALUE, String.valueOf(Float.parseFloat(value)));
+						break;
 					}
+					stats.put(key, value);
+					break;
+				case BALANCE:
+					if (!LightwareConstant.NONE.equals(value)) {
+						AdvancedControllableProperty control = createSlider(statsControl, key, String.valueOf(LightwareConstant.MIN_BALANCE), String.valueOf(LightwareConstant.MAX_BALANCE),
+								LightwareConstant.MIN_BALANCE, LightwareConstant.MAX_BALANCE, Float.valueOf(value));
+						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
+						statsControl.put(LightwareConstant.BALANCE_CURRENT_VALUE, String.valueOf(Float.parseFloat(value)));
+						break;
+					}
+					stats.put(key, value);
 					break;
 				case VOLUME_PERCENT:
-					stats.put(key, value);
 					if (!LightwareConstant.NONE.equals(value)) {
 						AdvancedControllableProperty controlVolumePercent = createSlider(statsControl, key, String.valueOf(LightwareConstant.MIN_VOLUME_PERCENT),
 								String.valueOf(LightwareConstant.MAX_VOLUME_PERCENT),
 								LightwareConstant.MIN_VOLUME_PERCENT, LightwareConstant.MAX_VOLUME_PERCENT, Float.valueOf(value));
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, controlVolumePercent);
-						statsControl.put(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE, value);
+						statsControl.put(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE, String.valueOf(Float.parseFloat(value)));
+						break;
 					}
+					stats.put(key, value);
 					break;
 				default:
 					stats.put(key, capitalizeFirstCharacter(value));
@@ -595,22 +689,6 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 			}
 		}
 	}
-
-	/**
-	 * Capitalizes the first character of a given string.
-	 *
-	 * @param value The input string.
-	 * @return A new string with the first character capitalized, or the original string if it's null or empty.
-	 */
-	private static String capitalizeFirstCharacter(String value) {
-		if (value == null || value.isEmpty()) {
-			return value;
-		}
-
-		char firstChar = Character.toUpperCase(value.charAt(0));
-		return firstChar + value.substring(1);
-	}
-
 
 	/**
 	 * Populates system settings-related statistics and advanced controllable properties based on provided data.
@@ -630,7 +708,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.FALSE, LightwareConstant.TRUE);
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-						continue;
+						break;
 					}
 					stats.put(key, LightwareConstant.NONE);
 					break;
@@ -640,43 +718,19 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					break;
 				case CONTROL_LOOK:
 					String finalValue = value;
-					value = LightwareConstant.CONTROL_BLOCK.stream().filter(item -> item.equalsIgnoreCase(finalValue)).findFirst().orElse(LightwareConstant.NONE);
-					AdvancedControllableProperty control = createDropdown(key, LightwareConstant.CONTROL_BLOCK.toArray(new String[0]), value);
-					addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
+					if (!StringUtils.isNullOrEmpty(value)) {
+						value = LightwareConstant.CONTROL_BLOCK.stream().filter(item -> item.equalsIgnoreCase(finalValue)).findFirst().orElse(LightwareConstant.NONE);
+						AdvancedControllableProperty control = createDropdown(key, LightwareConstant.CONTROL_BLOCK.toArray(new String[0]), value);
+						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
+						break;
+					}
+					stats.put(key, value);
 					break;
 				default:
 					stats.put(key, capitalizeFirstCharacter(StringUtils.isNullOrEmpty(value) ? LightwareConstant.NONE : value));
 					break;
 			}
 		}
-	}
-
-	/**
-	 * Checks the connection sources for HDMI inputs and analog output and populates the provided stats map.
-	 *
-	 * @param stats The map where connection source information will be stored.
-	 */
-	private void checkTheConnectionSourceByInputAndOutput(Map<String, String> stats) {
-		String key = AudioSettings.CONNECTION_SOURCE.getName();
-		String value = StringUtils.isNullOrEmpty(cacheMapOfKeyAndValue.get(key)) ? LightwareConstant.NONE : cacheMapOfKeyAndValue.get(key);
-		String connectedDefault3 = LightwareConstant.FALSE;
-		if (LightwareConstant.INPUT_3.equalsIgnoreCase(value)) {
-			connectedDefault3 = LightwareConstant.TRUE;
-		}
-		stats.put(LightwareConstant.AUDIO_HDMI_INPUT_3 + LightwareConstant.CONNECTED, connectedDefault3);
-
-		String connectedDefault4 = LightwareConstant.FALSE;
-		if (LightwareConstant.INPUT_4.equalsIgnoreCase(value)) {
-			connectedDefault4 = LightwareConstant.TRUE;
-		}
-		stats.put(LightwareConstant.AUDIO_HDMI_INPUT_4 + LightwareConstant.CONNECTED, connectedDefault4);
-
-		String connectedAnalog = LightwareConstant.FALSE;
-		if (!StringUtils.isNullOrEmpty(value) && !LightwareConstant.NONE.equals(value)) {
-			connectedAnalog = LightwareConstant.TRUE;
-		}
-		stats.put(LightwareConstant.AUDIO_ANALOG_OUTPUT + LightwareConstant.CONNECTED, connectedAnalog);
-		stats.put(LightwareConstant.AUDIO_ANALOG_OUTPUT + LightwareConstant.CONNECTION_SOURCE, value);
 	}
 
 	/**
@@ -692,52 +746,21 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 			String key = videoSettings.getName();
 			String value = StringUtils.isNullOrEmpty(cache.get(key)) ? LightwareConstant.NONE : cache.get(key);
 			switch (videoSettings) {
-				case CONNECTION_SOURCE_OUTPUT_HDMI3:
-					if (LightwareConstant.INPUT_3.equalsIgnoreCase(value)) {
-						StringBuilder commaSeparated = extractCommaSeparatedValues(cache.get(VideoSettings.CONNECTION_DESTINATIONS_INPUT_HDMI3.getName()));
-						if (commaSeparated.toString().contains(LightwareConstant.OUTPUT_1) || commaSeparated.toString().contains(LightwareConstant.OUTPUT_2)) {
-							stats.put(LightwareConstant.VIDEO_HDMI_INPUT_3 + LightwareConstant.CONNECTED, LightwareConstant.TRUE);
-							stats.put(key, value);
-							break;
-						}
+				case CONNECTION_DESTINATIONS_INPUT_HDMI3:
+				case CONNECTION_DESTINATIONS_INPUT_HDMI4:
+					StringBuilder commaSeparated = extractCommaSeparatedValues(value);
+					if (LightwareConstant.NUMBER_ONE.equalsIgnoreCase(value)) {
+						commaSeparated = new StringBuilder();
 					}
-					stats.put(LightwareConstant.VIDEO_HDMI_INPUT_3 + LightwareConstant.CONNECTED, LightwareConstant.FALSE);
-					stats.put(key, value);
+					stats.put(key, commaSeparated.toString().length() > 0 ? commaSeparated.toString() : LightwareConstant.NONE);
 					break;
 				case CONNECTION_SOURCE_OUTPUT_HDMI4:
-					if (LightwareConstant.INPUT_4.equalsIgnoreCase(value)) {
-						StringBuilder commaSeparated = extractCommaSeparatedValues(cache.get(VideoSettings.CONNECTION_DESTINATIONS_INPUT_HDMI4.getName()));
-						if (commaSeparated.toString().contains(LightwareConstant.OUTPUT_1) || commaSeparated.toString().contains(LightwareConstant.OUTPUT_2)) {
-							stats.put(LightwareConstant.VIDEO_HDMI_INPUT_4 + LightwareConstant.CONNECTED, LightwareConstant.TRUE);
-							stats.put(key, value);
-							break;
-						}
+				case CONNECTION_SOURCE_OUTPUT_HDMI3:
+					value = capitalizeFirstCharacter(value);
+					if (LightwareConstant.NUMBER_ONE.equalsIgnoreCase(value)) {
+						value = LightwareConstant.NONE;
 					}
-					stats.put(LightwareConstant.VIDEO_HDMI_INPUT_4 + LightwareConstant.CONNECTED, LightwareConstant.FALSE);
 					stats.put(key, value);
-					break;
-				case CONNECTION_DESTINATIONS_INPUT_HDMI3:
-					StringBuilder commaSeparated = extractCommaSeparatedValues(value);
-					stats.put(key, commaSeparated.toString().length() > 0 ? commaSeparated.toString() : LightwareConstant.NONE);
-					String input3 = cache.get(VideoSettings.CONNECTION_SOURCE_OUTPUT_HDMI3.getName());
-					String input4 = cache.get(VideoSettings.CONNECTION_SOURCE_OUTPUT_HDMI4.getName());
-					value = LightwareConstant.FALSE;
-					if (!StringUtils.isNullOrEmpty(input3) && LightwareConstant.INPUT_3.equalsIgnoreCase(input3) || !StringUtils.isNullOrEmpty(input4) && LightwareConstant.INPUT_3.equalsIgnoreCase(input4)) {
-						value = LightwareConstant.TRUE;
-					}
-					stats.put(LightwareConstant.VIDEO_HDMI_OUTPUT_3 + LightwareConstant.CONNECTED, value);
-					break;
-				case CONNECTION_DESTINATIONS_INPUT_HDMI4:
-					commaSeparated = extractCommaSeparatedValues(value);
-					stats.put(key, commaSeparated.toString().length() > 0 ? commaSeparated.toString() : LightwareConstant.NONE);
-					input3 = cache.get(VideoSettings.CONNECTION_SOURCE_OUTPUT_HDMI3.getName());
-					input4 = cache.get(VideoSettings.CONNECTION_SOURCE_OUTPUT_HDMI4.getName());
-					value = LightwareConstant.FALSE;
-					if (!StringUtils.isNullOrEmpty(input3) && LightwareConstant.INPUT_4.equalsIgnoreCase(input3) ||
-							!StringUtils.isNullOrEmpty(input4) && LightwareConstant.INPUT_4.equalsIgnoreCase(input4)) {
-						value = LightwareConstant.TRUE;
-					}
-					stats.put(LightwareConstant.VIDEO_HDMI_OUTPUT_4 + LightwareConstant.CONNECTED, value);
 					break;
 				case LOCKED_PORT_INPUT_HDMI3:
 				case LOCKED_PORT_INPUT_HDMI4:
@@ -749,8 +772,6 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 				case MUTE_PORT_OUTPUT_HDMI4:
 				case MUTE_EMBEDDED_PORT_OUTPUT_HDMI3:
 				case MUTE_EMBEDDED_PORT_OUTPUT_HDMI4:
-				case MUTE_EMBEDDED_PORT_INPUT_HDMI3:
-				case MUTE_EMBEDDED_PORT_INPUT_HDMI4:
 					int portValue = convertStringToInt(value);
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.FALSE, LightwareConstant.TRUE);
@@ -770,9 +791,9 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 					if (portValue != -1) {
 						AdvancedControllableProperty control = createSwitch(key, portValue, LightwareConstant.AUTO, LightwareConstant.ALWAYS);
 						addAdvanceControlProperties(advancedControllableProperties, statsControl, control);
-					} else {
-						stats.put(key, LightwareConstant.NONE);
+						break;
 					}
+					stats.put(key, LightwareConstant.NONE);
 					break;
 				default:
 					stats.put(key, StringUtils.isNullOrEmpty(value) ? LightwareConstant.NONE : value);
@@ -813,7 +834,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 		if (LightwareConstant.FALSE.equalsIgnoreCase(value)) {
 			return 0;
 		}
-		return -1; // Or a different default value, depending on your requirements.
+		return -1;
 	}
 
 	/**

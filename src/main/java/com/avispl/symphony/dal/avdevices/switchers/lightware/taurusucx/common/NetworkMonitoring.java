@@ -15,11 +15,21 @@ import com.avispl.symphony.dal.util.StringUtils;
  * @since 1.0.0
  */
 public enum NetworkMonitoring {
-	IP_ADDRESS("IPAddress", "/api/V1/MANAGEMENT/NETWORK/Staticip"),
-	SUBNET_MASK("SubnetMask", "/api/V1/MANAGEMENT/NETWORK/StaticNetworkMask"),
-	GATEWAY("Gateway", "/api/V1/MANAGEMENT/NETWORK/StaticGatewayAddress"),
-	DHCP_STATE("DHCPState", "/api/V1/MANAGEMENT/NETWORK/DhcpEnable"),
-	HOSTNAME("HostName", "/api/V1/MANAGEMENT/NETWORK/HostName"),
+	IP_ADDRESS("IPAddress", "api/V1/MANAGEMENT/NETWORK/Staticipaddress"),
+	SUBNET_MASK("SubnetMask", "api/V1/MANAGEMENT/NETWORK/StaticNetworkMask"),
+	GATEWAY("Gateway", "api/V1/MANAGEMENT/NETWORK/StaticGatewayAddress"),
+	DHCP_STATE("DHCPState", "api/V1/MANAGEMENT/NETWORK/DhcpEnabled"),
+	HOSTNAME("HostName", "api/V1/MANAGEMENT/NETWORK/HostName"),
+	MANUFACTURE("Manufacturer", "api/ManufacturerName"),
+	PRODUCT_NAME("ProductName", "api/ProductName"),
+	PART_NUMBER("PartNumber", "api/PartNumber"),
+	SERIAL_NUMBER("SerialNumber", "api/SerialNumber"),
+	DEVICE_LABEL("DeviceLabel", "api/V1/MANAGEMENT/LABEl/DeviceLabel"),
+	MAC_ADDRESS("MACAddress#Ethernet1MACAddress", "api/V1/MANAGEMENT/UID/MACADDRESS/Main"),
+	MAC_ADDRESS_TYPE1("MACAddress#Ethernet2MACAddress", "api/V1/MANAGEMENT/UID/MACADDRESS/UsbC_1"),
+	MAC_ADDRESS_TYPE2("MACAddress#Ethernet3MACAddress", "api/V1/MANAGEMENT/UID/MACADDRESS/UsbC_2"),
+
+
 	;
 
 	/**
@@ -67,10 +77,10 @@ public enum NetworkMonitoring {
 			switch (networkInformation) {
 				case DHCP_STATE:
 					if (LightwareConstant.TRUE.equalsIgnoreCase(value)) {
-						value = LightwareConstant.ENABLE;
+						value = LightwareConstant.ENABLED;
 					}
 					if (LightwareConstant.FALSE.equalsIgnoreCase(value)) {
-						value = LightwareConstant.DISABLE;
+						value = LightwareConstant.DISABLED;
 					}
 					stats.put(key, value);
 					break;

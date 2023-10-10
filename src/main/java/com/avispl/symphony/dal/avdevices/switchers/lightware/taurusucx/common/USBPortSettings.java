@@ -11,17 +11,20 @@ package com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common;
  * @since 1.0.0
  */
 public enum USBPortSettings {
-
-	CONNECTION_SOURCE("USBConnectionSource", "/api/V1/MEDIA/USB/XP/H1/ConnectedSource"),
-	CONNECTION_DESTINATIONS_U1("USBHost1#ConnectedDestinations", "/api/V1/MEDIA/USB/XP/U1/ConnectedDestinations"),
-	CONNECTION_DESTINATIONS_U2("USBHost2#ConnectedDestinations", "/api/V1/MEDIA/USB/XP/U2/ConnectedDestinations"),
-	CONNECTION_DESTINATIONS_U3("USBHost3#ConnectedDestinations", "/api/V1/MEDIA/USB/XP/U3/ConnectedDestinations"),
-	CONNECTION_DESTINATIONS_U4("USBHost4#ConnectedDestinations", "/api/V1/MEDIA/USB/XP/U4/ConnectedDestinations"),
-	LOCKED_USB_PORT_U1("USBHost1#LockUSBPort", "/api/V1/MEDIA/USB/XP/U1/Lock"),
-	LOCKED_USB_PORT_U2("USBHost2#LockUSBPort", "/api/V1/MEDIA/USB/XP/U2/Lock"),
-	LOCKED_USB_PORT_U3("USBHost3#LockUSBPort", "/api/V1/MEDIA/USB/XP/U3/Lock"),
-	LOCKED_USB_PORT_U4("USBHost4#LockUSBPort", "/api/V1/MEDIA/USB/XP/U4/Lock"),
-	LOCKED_USB_HUB("USBHub#LockUSBPort", "/api/V1/MEDIA/USB/XP/H1/Lock"),
+	USB_HOST1("USBHost1#Connected", "api/V1/MEDIA/USB/U1/connected"),
+	USB_HOST2("USBHost2#Connected", "api/V1/MEDIA/USB/U2/connected"),
+	USB_HOST3("USBHost3#Connected", "api/V1/MEDIA/USB/U3/connected"),
+	USB_HOST4("USBHost4#Connected", "api/V1/MEDIA/USB/U4/connected"),
+	CONNECTION_DESTINATIONS_U1("USBHost1#ConnectedDestinations", "api/V1/MEDIA/USB/XP/U1/ConnectedDestinations"),
+	CONNECTION_DESTINATIONS_U2("USBHost2#ConnectedDestinations", "api/V1/MEDIA/USB/XP/U2/ConnectedDestinations"),
+	CONNECTION_DESTINATIONS_U3("USBHost3#ConnectedDestinations", "api/V1/MEDIA/USB/XP/U3/ConnectedDestinations"),
+	CONNECTION_DESTINATIONS_U4("USBHost4#ConnectedDestinations", "api/V1/MEDIA/USB/XP/U4/ConnectedDestinations"),
+	LOCKED_USB_PORT_U1("USBHost1#Lock", "api/V1/MEDIA/USB/XP/U1/Lock"),
+	LOCKED_USB_PORT_U2("USBHost2#Lock", "api/V1/MEDIA/USB/XP/U2/Lock"),
+	LOCKED_USB_PORT_U3("USBHost3#Lock", "api/V1/MEDIA/USB/XP/U3/Lock"),
+	LOCKED_USB_PORT_U4("USBHost4#Lock", "api/V1/MEDIA/USB/XP/U4/Lock"),
+	LOCKED_USB_HUB("USBHub#Lock", "api/V1/MEDIA/USB/XP/H1/Lock"),
+	CONNECTION_SOURCE("USBHub#ConnectionSource", "api/V1/MEDIA/USB/XP/H1/ConnectedSource"),
 	;
 
 	/**
