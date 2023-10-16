@@ -366,7 +366,7 @@ class LightwareUCXCommunicatorTest {
 				.get()
 				.getValue());
 		Assert.assertEquals("0.0", audioVolume);
-		Assert.assertEquals("0", stats.get(LightwareConstant.AUDIO_CURRENT_VALUE));
+		Assert.assertEquals("0.0", stats.get(LightwareConstant.AUDIO_CURRENT_VALUE));
 		String audioVolumePercent = String.valueOf(controllablePropertyList
 				.stream()
 				.filter(item -> item.getName().equals(AudioSettings.VOLUME_PERCENT.getName()))
@@ -374,7 +374,7 @@ class LightwareUCXCommunicatorTest {
 				.get()
 				.getValue());
 		Assert.assertEquals("100.0", audioVolumePercent);
-		Assert.assertEquals("100", stats.get(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE));
+		Assert.assertEquals("100.0", stats.get(LightwareConstant.AUDIO_PERCENT_CURRENT_VALUE));
 	}
 
 	/**
