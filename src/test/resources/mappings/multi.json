@@ -328,7 +328,7 @@
     {
       "request": {
         "method": "GET",
-        "url": "/api/V1/MEDIA/VIDEO/I4/SignalPresent"
+        "url": "/api/V1/MEDIA/VIDEO/O1/SignalPresent"
       },
       "response": {
         "headers": {
@@ -341,7 +341,7 @@
     {
       "request": {
         "method": "GET",
-        "url": "/api/V1/MEDIA/VIDEO/I4/SignalPresent"
+        "url": "/api/V1/MEDIA/VIDEO/O2/SignalPresent"
       },
       "response": {
         "headers": {
@@ -374,6 +374,32 @@
           "Content-Type": "application/json"
         },
         "body": "HDCP 1.4",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O2/HDCP/AllowedHdcpVersion"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "HDCP 2.2",
+        "status": "200"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/api/V1/MEDIA/VIDEO/O1/HDCP/AllowedHdcpVersion"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "HDCP 2.2",
         "status": "200"
       }
     },

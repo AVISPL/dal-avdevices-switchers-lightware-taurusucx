@@ -809,14 +809,24 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 	 * @return a StringBuilder containing comma-separated values.
 	 */
 	private StringBuilder extractCommaSeparatedValues(String value) {
-		Pattern pattern = Pattern.compile(LightwareConstant.REGEX_ARRAY);
-		Matcher matcher = pattern.matcher(value);
 		StringBuilder commaSeparated = new StringBuilder();
-		while (matcher.find()) {
-			commaSeparated.append(matcher.group(1)).append(", ");
+		if (StringUtils.isNullOrEmpty(value)) {
+			return commaSeparated.append(LightwareConstant.NONE);
 		}
-		if (commaSeparated.length() > 2) {
-			commaSeparated.setLength(commaSeparated.length() - 2);
+		try {
+			Pattern pattern = Pattern.compile(LightwareConstant.REGEX_ARRAY);
+			Matcher matcher = pattern.matcher(value);
+			while (matcher.find()) {
+				commaSeparated.append(matcher.group(1)).append(", ");
+			}
+			if (commaSeparated.length() > 2) {
+				commaSeparated.setLength(commaSeparated.length() - 2);
+			}
+			if (commaSeparated.length() == 0) {
+				commaSeparated.append(value);
+			}
+		} catch (Exception e) {
+			commaSeparated = new StringBuilder().append(LightwareConstant.NONE);
 		}
 		return commaSeparated;
 	}
