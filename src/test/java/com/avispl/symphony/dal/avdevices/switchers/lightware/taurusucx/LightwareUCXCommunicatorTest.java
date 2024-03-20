@@ -4,6 +4,7 @@
 package com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -70,7 +71,7 @@ class LightwareUCXCommunicatorTest {
 	 * Test timeout exception
 	 */
 	@Test
-	void testPingTimeout() throws Exception {
+	void testTCPPingTimeout() throws Exception {
 		lightwareUCXCommunicator.destroy();
 		wireMockRule.shutdown();
 		lightwareUCXCommunicator = new LightwareUCXCommunicator();
@@ -79,10 +80,26 @@ class LightwareUCXCommunicatorTest {
 		lightwareUCXCommunicator.setProtocol(PROTOCOL);
 		lightwareUCXCommunicator.setPort(80);
 		lightwareUCXCommunicator.setHost("127.0.0.1");
+		lightwareUCXCommunicator.setPingMode("TCP");
 		lightwareUCXCommunicator.setContentType("application/json");
 		lightwareUCXCommunicator.authenticate();
 		lightwareUCXCommunicator.init();
 		assertThrows(RuntimeException.class, () -> lightwareUCXCommunicator.ping(), "Expect throw RuntimeException with connection timeout");
+	}
+
+	@Test
+	void testICMPPing() throws Exception {
+		lightwareUCXCommunicator.destroy();
+		lightwareUCXCommunicator = new LightwareUCXCommunicator();
+
+		lightwareUCXCommunicator.setTrustAllCertificates(false);
+		lightwareUCXCommunicator.setProtocol(PROTOCOL);
+		lightwareUCXCommunicator.setPort(80);
+		lightwareUCXCommunicator.setHost("127.0.0.1");
+		lightwareUCXCommunicator.setPingMode("ICMP");
+		lightwareUCXCommunicator.authenticate();
+		lightwareUCXCommunicator.init();
+		assertEquals(1, lightwareUCXCommunicator.ping());
 	}
 
 	/**
