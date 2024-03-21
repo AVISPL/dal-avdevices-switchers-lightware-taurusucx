@@ -36,6 +36,7 @@ import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.Co
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.LightwareConstant;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.NetworkMonitoring;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.NetworkSecurity;
+import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.PingMode;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.SerialPortConfiguration;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.SystemSettings;
 import com.avispl.symphony.dal.avdevices.switchers.lightware.taurusucx.common.USBPortSettings;
@@ -128,20 +129,24 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 	private boolean isEmergencyDelivery;
 	private int failMonitor = 0;
 	private int noOfRequest = 0;
+	private PingMode pingMode = PingMode.ICMP;
 
 	/**
-	 * Capitalizes the first character of a given string.
+	 * Retrieves {@link #pingMode}
 	 *
-	 * @param value The input string.
-	 * @return A new string with the first character capitalized, or the original string if it's null or empty.
+	 * @return value of {@link #pingMode}
 	 */
-	private static String capitalizeFirstCharacter(String value) {
-		if (value == null || value.isEmpty()) {
-			return value;
-		}
+	public String getPingMode() {
+		return pingMode.name();
+	}
 
-		char firstChar = Character.toUpperCase(value.charAt(0));
-		return firstChar + value.substring(1);
+	/**
+	 * Sets {@link #pingMode} value
+	 *
+	 * @param pingMode new value of {@link #pingMode}
+	 */
+	public void setPingMode(String pingMode) {
+		this.pingMode = PingMode.ofString(pingMode);
 	}
 
 	/**
@@ -209,40 +214,46 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 	 */
 	@Override
 	public int ping() throws Exception {
-		if (isInitialized()) {
-			long pingResultTotal = 0L;
+		if (this.pingMode == PingMode.ICMP) {
+			return super.ping();
+		} else if (this.pingMode == PingMode.TCP) {
+			if (isInitialized()) {
+				long pingResultTotal = 0L;
 
-			for (int i = 0; i < this.getPingAttempts(); i++) {
-				long startTime = System.currentTimeMillis();
+				for (int i = 0; i < this.getPingAttempts(); i++) {
+					long startTime = System.currentTimeMillis();
 
-				try (Socket puSocketConnection = new Socket(this.host, this.getPort())) {
-					puSocketConnection.setSoTimeout(this.getPingTimeout());
-					if (puSocketConnection.isConnected()) {
-						long pingResult = System.currentTimeMillis() - startTime;
-						pingResultTotal += pingResult;
-						if (this.logger.isTraceEnabled()) {
-							this.logger.trace(String.format("PING OK: Attempt #%s to connect to %s on port %s succeeded in %s ms", i + 1, host, this.getPort(), pingResult));
+					try (Socket puSocketConnection = new Socket(this.host, this.getPort())) {
+						puSocketConnection.setSoTimeout(this.getPingTimeout());
+						if (puSocketConnection.isConnected()) {
+							long pingResult = System.currentTimeMillis() - startTime;
+							pingResultTotal += pingResult;
+							if (this.logger.isTraceEnabled()) {
+								this.logger.trace(String.format("PING OK: Attempt #%s to connect to %s on port %s succeeded in %s ms", i + 1, host, this.getPort(), pingResult));
+							}
+						} else {
+							if (this.logger.isDebugEnabled()) {
+								this.logger.debug(String.format("PING DISCONNECTED: Connection to %s did not succeed within the timeout period of %sms", host, this.getPingTimeout()));
+							}
+							return this.getPingTimeout();
 						}
-					} else {
-						if (this.logger.isDebugEnabled()) {
-							this.logger.debug(String.format("PING DISCONNECTED: Connection to %s did not succeed within the timeout period of %sms", host, this.getPingTimeout()));
+					} catch (SocketTimeoutException | ConnectException tex) {
+						throw new RuntimeException("Socket connection timed out", tex);
+					} catch (UnknownHostException ex) {
+						throw new UnknownHostException(String.format("Connection timed out, UNKNOWN host %s", host));
+					} catch (Exception e) {
+						if (this.logger.isWarnEnabled()) {
+							this.logger.warn(String.format("PING TIMEOUT: Connection to %s did not succeed, UNKNOWN ERROR %s: ", host, e.getMessage()));
 						}
 						return this.getPingTimeout();
 					}
-				} catch (SocketTimeoutException | ConnectException tex) {
-					throw new RuntimeException("Socket connection timed out", tex);
-				} catch (UnknownHostException ex) {
-					throw new UnknownHostException(String.format("Connection timed out, UNKNOWN host %s", host));
-				} catch (Exception e) {
-					if (this.logger.isWarnEnabled()) {
-						this.logger.warn(String.format("PING TIMEOUT: Connection to %s did not succeed, UNKNOWN ERROR %s: ", host, e.getMessage()));
-					}
-					return this.getPingTimeout();
 				}
+				return Math.max(1, Math.toIntExact(pingResultTotal / this.getPingAttempts()));
+			} else {
+				throw new IllegalStateException("Cannot use device class without calling init() first");
 			}
-			return Math.max(1, Math.toIntExact(pingResultTotal / this.getPingAttempts()));
 		} else {
-			throw new IllegalStateException("Cannot use device class without calling init() first");
+			throw new IllegalArgumentException("Unknown PING Mode: " + pingMode);
 		}
 	}
 
@@ -884,6 +895,21 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 	 */
 	private void convertConfigManagement() {
 		isConfigManagement = StringUtils.isNotNullOrEmpty(this.configManagement) && this.configManagement.equalsIgnoreCase(LightwareConstant.TRUE);
+	}
+
+	/**
+	 * Capitalizes the first character of a given string.
+	 *
+	 * @param value The input string.
+	 * @return A new string with the first character capitalized, or the original string if it's null or empty.
+	 */
+	private static String capitalizeFirstCharacter(String value) {
+		if (value == null || value.isEmpty()) {
+			return value;
+		}
+
+		char firstChar = Character.toUpperCase(value.charAt(0));
+		return firstChar + value.substring(1);
 	}
 
 	/**
