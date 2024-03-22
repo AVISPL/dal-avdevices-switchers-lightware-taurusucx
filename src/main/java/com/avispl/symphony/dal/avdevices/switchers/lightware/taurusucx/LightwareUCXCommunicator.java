@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
 
 import javax.security.auth.login.LoginException;
@@ -182,6 +183,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 			convertConfigManagement();
 			if (!isEmergencyDelivery) {
 				failMonitor = 0;
+				noOfRequest = 0;
 				for (ControlGroupType controlGroupType : ControlGroupType.values()) {
 					if (controlGroupType.isMonitoringType()) {
 						retrieveDetailsByEnumType(controlGroupType.getEnumType());
@@ -333,6 +335,7 @@ public class LightwareUCXCommunicator extends RestCommunicator implements Monito
 		if (!StringUtils.isNullOrEmpty(this.getLogin()) && !StringUtils.isNullOrEmpty(this.getPassword())) {
 			headers.setBasicAuth(this.getLogin(), this.getPassword());
 		}
+		headers.setContentType(MediaType.TEXT_PLAIN);
 		return headers;
 	}
 
