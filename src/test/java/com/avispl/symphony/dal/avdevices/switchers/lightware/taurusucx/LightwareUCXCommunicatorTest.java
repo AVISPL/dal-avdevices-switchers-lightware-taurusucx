@@ -56,7 +56,7 @@ class LightwareUCXCommunicatorTest {
 		lightwareUCXCommunicator.setProtocol(PROTOCOL);
 		lightwareUCXCommunicator.setPort(wireMockRule.port());
 		lightwareUCXCommunicator.setHost(HOST_NAME);
-		lightwareUCXCommunicator.setContentType("application/json");
+		lightwareUCXCommunicator.setContentType("text/plain");
 		lightwareUCXCommunicator.init();
 		lightwareUCXCommunicator.authenticate();
 	}
@@ -81,7 +81,7 @@ class LightwareUCXCommunicatorTest {
 		lightwareUCXCommunicator.setPort(80);
 		lightwareUCXCommunicator.setHost("127.0.0.1");
 		lightwareUCXCommunicator.setPingMode("TCP");
-		lightwareUCXCommunicator.setContentType("application/json");
+		lightwareUCXCommunicator.setContentType("text/plain");
 		lightwareUCXCommunicator.authenticate();
 		lightwareUCXCommunicator.init();
 		assertThrows(RuntimeException.class, () -> lightwareUCXCommunicator.ping(), "Expect throw RuntimeException with connection timeout");

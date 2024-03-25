@@ -7,7 +7,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "I3",
         "status": "200"
@@ -20,7 +20,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "O3",
         "status": "200"
@@ -33,7 +33,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "1",
         "status": "200"
@@ -46,7 +46,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -59,7 +59,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -72,7 +72,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -85,7 +85,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -98,7 +98,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -111,7 +111,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -124,7 +124,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -137,7 +137,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -150,7 +150,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -163,7 +163,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -176,7 +176,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "0",
         "status": "200"
@@ -189,7 +189,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "10",
         "status": "200"
@@ -202,7 +202,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "100",
         "status": "200"
@@ -215,7 +215,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -228,7 +228,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -241,7 +241,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "OK",
         "status": "200"
@@ -254,7 +254,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "OK",
         "status": "200"
@@ -267,7 +267,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "I3",
         "status": "200"
@@ -280,7 +280,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "I3",
         "status": "200"
@@ -293,7 +293,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "[\"O1\",\"O2\"]",
         "status": "200"
@@ -306,7 +306,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "1",
         "status": "200"
@@ -319,7 +319,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -332,7 +332,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -345,7 +345,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -358,7 +358,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -371,7 +371,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "HDCP 1.4",
         "status": "200"
@@ -384,7 +384,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "HDCP 2.2",
         "status": "200"
@@ -397,7 +397,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "HDCP 2.2",
         "status": "200"
@@ -410,7 +410,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "HDCP 1.4",
         "status": "200"
@@ -423,7 +423,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "auto",
         "status": "200"
@@ -436,7 +436,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "auto",
         "status": "200"
@@ -449,7 +449,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "True",
         "status": "200"
@@ -462,7 +462,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "True",
         "status": "200"
@@ -475,7 +475,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "True",
         "status": "200"
@@ -488,7 +488,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "True",
         "status": "200"
@@ -501,7 +501,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -514,7 +514,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -527,7 +527,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -540,7 +540,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -553,7 +553,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -566,7 +566,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -579,7 +579,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -592,7 +592,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -605,7 +605,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "True",
         "status": "200"
@@ -618,7 +618,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "True",
         "status": "200"
@@ -631,7 +631,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -644,7 +644,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -657,7 +657,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -670,7 +670,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -683,7 +683,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "OK",
         "status": "200"
@@ -696,7 +696,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "OK",
         "status": "200"
@@ -709,7 +709,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "OK",
         "status": "200"
@@ -722,7 +722,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "OK",
         "status": "200"
@@ -735,7 +735,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -748,7 +748,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -761,7 +761,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -774,7 +774,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -787,7 +787,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -800,7 +800,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "80",
         "status": "200"
@@ -813,7 +813,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "443",
         "status": "200"
@@ -826,7 +826,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -839,7 +839,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -852,7 +852,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "admin",
         "status": "200"
@@ -865,7 +865,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -878,7 +878,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -891,7 +891,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "v2.2.0b4",
         "status": "200"
@@ -904,7 +904,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -917,7 +917,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -930,7 +930,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "None",
         "status": "200"
@@ -943,7 +943,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "None",
         "status": "200"
@@ -956,7 +956,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "H1",
         "status": "200"
@@ -969,7 +969,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "1",
         "status": "200"
@@ -982,7 +982,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "H1",
         "status": "200"
@@ -995,7 +995,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "1",
         "status": "200"
@@ -1008,7 +1008,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1021,7 +1021,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1034,7 +1034,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1047,7 +1047,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1060,7 +1060,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1073,7 +1073,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1086,7 +1086,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "Ok",
         "status": "200"
@@ -1099,7 +1099,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "U4",
         "status": "200"
@@ -1112,7 +1112,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "172.31.254.30",
         "status": "200"
@@ -1125,7 +1125,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "255.255.255.0",
         "status": "200"
@@ -1138,7 +1138,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "172.31.254.2",
         "status": "200"
@@ -1151,7 +1151,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "false",
         "status": "200"
@@ -1164,7 +1164,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "lightware-D4348675",
         "status": "200"
@@ -1177,7 +1177,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "Lightware UCX",
         "status": "200"
@@ -1190,7 +1190,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "LW_UCX_4x2_HC30",
         "status": "200"
@@ -1203,7 +1203,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "91310081",
         "status": "200"
@@ -1216,7 +1216,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "D4348675",
         "status": "200"
@@ -1229,7 +1229,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "LW_UCX_4x2_HC30_D",
         "status": "200"
@@ -1242,7 +1242,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "19200",
         "status": "200"
@@ -1255,7 +1255,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "1",
         "status": "200"
@@ -1268,7 +1268,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "8",
         "status": "200"
@@ -1281,7 +1281,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "Odd",
         "status": "200"
@@ -1294,7 +1294,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "19200",
         "status": "200"
@@ -1307,7 +1307,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "1",
         "status": "200"
@@ -1320,7 +1320,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "8",
         "status": "200"
@@ -1333,7 +1333,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "Odd",
         "status": "200"
@@ -1346,7 +1346,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1359,7 +1359,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1372,7 +1372,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1385,7 +1385,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1398,7 +1398,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "true",
         "status": "200"
@@ -1411,7 +1411,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "A8:D2:36:01:F7:F1",
         "status": "200"
@@ -1424,7 +1424,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "A8:D2:36:01:F7:F2",
         "status": "200"
@@ -1437,7 +1437,7 @@
       },
       "response": {
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain"
         },
         "body": "A8:D2:36:01:F7:F3",
         "status": "200"
